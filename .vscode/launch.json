@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch Desktop",
+            "request": "launch",
+            "mainClass": "Desktop",
+            "projectName": "Culminating_bcbc3ffa"
+        },
+        {
+            "type": "java",
             "name": "Launch Culminating",
             "request": "launch",
             "vmArgs": "--module-path C:/Users/user/Desktop/BenfordsLaw/javafx-sdk-11.0.2/lib --add-modules javafx.controls,javafx.fxml",
