@@ -7,15 +7,17 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 public class Culminating extends Application implements EventHandler<ActionEvent>{
     
-    Stage window;
-    Scene scene1, scene2, scene3, scene4;
-    Button button, goBack1, goBack2, goBack3, edit1, edit2, edit3, use1, use2, use3;
-    Label[] label8;
+    static Stage window;
+    Scene scene1, scene2, scene201, scene3, scene301, scene4, scene401, errorScene;
+    Button cont1, cont2, cont3, cont4, goBack1, goBack2, goBack3, goBack4, edit1, edit2, edit3, use1, use2, use3;
+    Label error;
+    Label[] label8, label9;
     File math = new File("Math.txt");
     File chem = new File("Chemistry.txt");
     File physics = new File("Physics.txt");
@@ -49,6 +51,13 @@ public class Culminating extends Application implements EventHandler<ActionEvent
             label8[i].setTranslateY(20);
         }
 
+        label9 = new Label[3];
+        for (int i = 0; i < 3; i++) {
+            label9[i] = new Label("Which number question would you like to edit?");
+        }
+
+        error = new Label("The value you inputted is not valid. Go back and try again");
+
         // Drop down menu
         ComboBox<String> comboBox = new ComboBox<>();
         comboBox.getItems().addAll("Math", "Chemistry", "Physics");
@@ -56,8 +65,8 @@ public class Culminating extends Application implements EventHandler<ActionEvent
         comboBox.setTranslateY(10);
 
         // A continue button for scene 1 after the user selects from the drop down menu
-        button = new Button("Continue");
-        button.setTranslateY(50);
+        cont1 = new Button("Continue");
+        cont1.setTranslateY(50);
 
         // Go back buttons for the other scenes
         goBack1 = new Button("Go Back");
@@ -69,7 +78,10 @@ public class Culminating extends Application implements EventHandler<ActionEvent
         goBack3 = new Button("Go Back");
         goBack3.setTranslateX(-160);
         goBack3.setTranslateY(130);
-        
+        goBack4 = new Button("Go Back");
+        goBack4.setTranslateX(-160);
+        goBack4.setTranslateY(130);
+
         // Buttons that send users to make their own questions
         edit1 = new Button("Make Math Questions!");
         edit1.setTranslateX(-75);
@@ -92,9 +104,28 @@ public class Culminating extends Application implements EventHandler<ActionEvent
         use3.setTranslateX(75);
         use3.setTranslateY(50);
 
+        // Text fields
+        TextField questionNum1 = new TextField();
+        questionNum1.setMaxWidth(60);
+        questionNum1.setTranslateY(30);
+        TextField questionNum2 = new TextField();
+        questionNum2.setMaxWidth(60);
+        questionNum2.setTranslateY(30);
+        TextField questionNum3 = new TextField();
+        questionNum3.setMaxWidth(60);
+        questionNum3.setTranslateY(30);
+
+        // Continue buttons after user inputs something
+        cont2 = new Button("Continue");
+        cont2.setTranslateY(60);
+        cont3 = new Button("Continue");
+        cont3.setTranslateY(60);
+        cont4 = new Button("Continue");
+        cont4.setTranslateY(60);
+        
         // The introduction scene
         StackPane layout1 = new StackPane();
-        layout1.getChildren().addAll(label1, label2, label3, label4, button, comboBox);
+        layout1.getChildren().addAll(label1, label2, label3, label4, cont1, comboBox);
         scene1 = new Scene(layout1, 300, 300);
 
         // Math Scene
@@ -102,25 +133,42 @@ public class Culminating extends Application implements EventHandler<ActionEvent
         layout2.getChildren().addAll(label5, goBack1, label8[0], use1, edit1);
         scene2 = new Scene(layout2, 400, 300);
 
+        StackPane layout201 = new StackPane();
+        layout201.getChildren().addAll(label9[0], questionNum1, cont2);
+        scene201 = new Scene(layout201, 400, 300);
+
         // Chemistry Scene
         StackPane layout3 = new StackPane();
         layout3.getChildren().addAll(label6, goBack2, label8[1], use2, edit2);
         scene3 = new Scene(layout3, 400, 300);
+
+        StackPane layout301 = new StackPane();
+        layout301.getChildren().addAll(label9[1], questionNum2, cont3);
+        scene301 = new Scene(layout301, 400, 300);
 
         // Physics Scene
         StackPane layout4 = new StackPane();
         layout4.getChildren().addAll(label7, goBack3, label8[2], use3, edit3);
         scene4 = new Scene(layout4, 400, 300);
 
+        StackPane layout401 = new StackPane();
+        layout401.getChildren().addAll(label9[2], questionNum3, cont4);
+        scene401 = new Scene(layout401, 400, 300);
+
+        StackPane layout5 = new StackPane();
+        layout5.getChildren().addAll(error, goBack4);
+        errorScene = new Scene(layout5, 400, 300);
+
         // Starts with scene 1
         window.setScene(scene1);
         window.show();
 
         // What happens when these buttons are clicked
-        button.setOnAction(e -> getChoice(comboBox, window));
+        cont1.setOnAction(e -> getChoice(comboBox, window));
         goBack1.setOnAction(e -> window.setScene(scene1));
         goBack2.setOnAction(e -> window.setScene(scene1));
         goBack3.setOnAction(e -> window.setScene(scene1));
+        goBack4.setOnAction(e -> window.setScene(scene201));
 
         // When the user presses one of the use buttons, the program opens the notepad and the user can copy and paste from there.
         use1.setOnAction(e -> {
@@ -139,6 +187,38 @@ public class Culminating extends Application implements EventHandler<ActionEvent
             try {
                 sendToFile(physics);
             } catch (IOException e1) {
+            }
+        });
+
+        // When user selects Make Questions
+        edit1.setOnAction(e -> {
+            try {
+                window.setScene(scene201);
+                sendToFile(math);
+            } catch (IOException e1) {
+            }
+        });
+        edit2.setOnAction(e -> {
+            try {
+                window.setScene(scene301);
+                sendToFile(chem);
+            } catch (IOException e1) {
+            }
+        });
+        edit3.setOnAction(e -> {
+            try {
+                window.setScene(scene401);
+                sendToFile(physics);
+            } catch (IOException e1) {
+            }
+        });
+
+        cont2.setOnAction(e -> {
+            try {
+                line(math, questionNum1, errorScene);
+            } catch (FileNotFoundException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
             }
         });
     }
@@ -166,7 +246,7 @@ public class Culminating extends Application implements EventHandler<ActionEvent
 
     /*
      * Author - Benjamin Kim
-     * Description - Opens a notepad for the specific subject the user chose
+     * Description - Opens a notepad for the specific subject the user chose so they can view the questions
      * 
      * @param - File file
      * @return - No return
@@ -177,9 +257,112 @@ public class Culminating extends Application implements EventHandler<ActionEvent
         pb.start();
     }
 
-    public void makeQuestions(File file) throws IOException {
-        
+    /*
+     * Author - Benjamin Kim
+     * Description - Goes through a specified file and looks for a line that's first character is an integer. 
+     *               It stores that line in a string.
+     * 
+     * @param - File file
+     * @return - String line
+     */
+    public static String line(File file, TextField textField, Scene errorScene) throws FileNotFoundException {
+        Scanner scan = new Scanner(file);
+        int input = userNum(textField, errorScene);
+        int period;
+        int numInText;
+        String line = "";
+        while (scan.hasNextLine()) {
+            line = scan.nextLine();
+            period = findPeriod(line);
+            numInText = questionNum(period, line);
+            if (numInText == input) {
+                return line;
+            }
+            else {
+                if (scan.hasNextLine()) {
+                    line = scan.nextLine();
+                }
+            }
+        }
+        System.out.println(line);
+        return "";
     }
+
+    /*
+     * Author - Benjamin Kim 
+     * Description - Finds how many characters the period is to signal the end of the question number. Returns the position of the period
+     * 
+     * @param - String line
+     * @return - int period position
+     */
+    public static int findPeriod(String line) throws FileNotFoundException {
+        int lineLength = line.length();
+        for (int i = 0; i < lineLength; i++) {
+            if (line.charAt(i) == '.') {
+                return i;
+            }
+        }
+        return 0;
+    }
+
+    /* 
+     * Author - Benjamin Kim
+     * Description - Uses the period position to find the integer which is the question number
+     * 
+     * @param - integer period position, String line
+     * @return - integer question number
+     */
+    public static int questionNum(int period, String line) throws FileNotFoundException {
+        String questionNumStr = line.substring(0, period);
+        int questionNum = Integer.parseInt(questionNumStr);
+        System.out.println(questionNum);
+        return questionNum;
+    }
+
+    /*
+     * Author - Benjamin Kim
+     * Description - Gets the number the user typed in the blank
+     * 
+     * @param - TextField textField, Scene errorScene
+     * @return - integer user input num
+     */
+    public static int userNum(TextField textField, Scene errorScene) {
+        String input = textField.getText();
+        int charNum = input.length();
+        char[] digit = new char[charNum];
+        for(int i = 0; i < charNum; i++) {
+            if (Character.isDigit(digit[i]) == false) {
+                window.setScene(errorScene);
+            }
+            else {
+                int inputNum = Integer.parseInt(input);
+                return inputNum;
+            }
+        }
+        return 0;
+    }
+    
+    /*
+     * Author - Benjamin Kim
+     * Description - Compares the number written in the text file to the number the user wrote
+     * 
+     * @param - File file, TextField textField, Scene errorScene
+     * @return - no return
+     */
+    /*
+    public static void question(File file, TextField textField, Scene errorScene) throws FileNotFoundException {
+        String line = line(file);
+        int period = findPeriod(line);
+        int numQuestion = questionNum(period, line);
+        int input = userNum(textField, errorScene);
+        if (numQuestion == input) {
+            System.out.println(line);
+        }
+        else {
+            window.setScene(errorScene);
+        }
+    }
+    */
 
     @Override
     public void handle(ActionEvent arg0) {
