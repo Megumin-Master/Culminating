@@ -264,25 +264,27 @@ public class Culminating extends Application implements EventHandler<ActionEvent
      * @param - File file
      * @return - String line
      */
-    public static void line(File file, TextField textField, Scene errorScene) throws FileNotFoundException {
+    public static String line(File file, TextField textField, Scene errorScene) throws FileNotFoundException {
         Scanner scan = new Scanner(file);
         int input = userNum(textField, errorScene);
-        System.out.println(input);
         int textNum = 0;
         String line = "";
         while (scan.hasNextLine()) {
             line = scan.nextLine();
-            System.out.println(line);
-            textNum = questionNum(line);
-            System.out.println(textNum);
-            
+            if (Character.isDigit(line.charAt(0)) == false) {
+                line = scan.nextLine();
+            }
+            else {
+                textNum = questionNum(line);
+            }
             if (textNum == input) {
+                System.out.println(textNum + ", " + input);
                 System.out.println(line);
-                //return line;
+                return line;
             }
             
         }
-        //return "";
+        return line;
     }
 
     /*
@@ -307,26 +309,22 @@ public class Culminating extends Application implements EventHandler<ActionEvent
      * Author - Benjamin Kim
      * Description - Uses the period position to find the integer which is the question number
      * 
-     * @param - integer period position, String line
+     * @param - String line
      * @return - integer question number
      */
     public static int questionNum(String line) throws FileNotFoundException {
-        if (Character.isDigit(line.charAt(0)) == false) {
-            return 0;
-        }
         int period = findPeriod(line);
         String questionNumStr = line.substring(0, period);
         int questionNum = Integer.parseInt(questionNumStr);
-        System.out.println(questionNum);
         return questionNum;
     }
 
     /*
      * Author - Benjamin Kim
-     * Description - Gets the number the user typed in the blank
+     * Description - Gets the number the user typed in the blank. Also sends user to a error scene if they input an invalid value.
      * 
      * @param - TextField textField, Scene errorScene
-     * @return - integer user input num
+     * @return - integer user input number
      */
     public static int userNum(TextField textField, Scene errorScene) {
         String input = textField.getText();
@@ -350,27 +348,6 @@ public class Culminating extends Application implements EventHandler<ActionEvent
         }
         return inputNum;
     }
-    
-    /*
-     * Author - Benjamin Kim
-     * Description - Compares the number written in the text file to the number the user wrote
-     * 
-     * @param - File file, TextField textField, Scene errorScene
-     * @return - no return
-     */
-    /*
-    public static void question(File file, TextField textField, Scene errorScene) throws FileNotFoundException {
-        String line = line(file, textField, errorScene);
-        int numQuestion = questionNum(line);
-        int input = userNum(textField, errorScene);
-        if (numQuestion == input) {
-            System.out.println(line);
-        }
-        else {
-            window.setScene(errorScene);
-        }
-    }
-    */
 
     @Override
     public void handle(ActionEvent arg0) {
