@@ -268,8 +268,8 @@ public class Culminating extends Application implements EventHandler<ActionEvent
     public static String line(File file, TextField textField, Scene errorScene) throws FileNotFoundException {
         Scanner scan = new Scanner(file);
         int input = userNum(textField, errorScene);
-        int period;
-        int numInText;
+        int period = 0;
+        int numInText = 0;
         String line = "";
         while (scan.hasNextLine()) {
             line = scan.nextLine();
@@ -277,11 +277,6 @@ public class Culminating extends Application implements EventHandler<ActionEvent
             numInText = questionNum(period, line);
             if (numInText == input) {
                 return line;
-            }
-            else {
-                if (scan.hasNextLine()) {
-                    line = scan.nextLine();
-                }
             }
         }
         System.out.println(line);
@@ -315,7 +310,6 @@ public class Culminating extends Application implements EventHandler<ActionEvent
     public static int questionNum(int period, String line) throws FileNotFoundException {
         String questionNumStr = line.substring(0, period);
         int questionNum = Integer.parseInt(questionNumStr);
-        System.out.println(questionNum);
         return questionNum;
     }
 
@@ -329,17 +323,20 @@ public class Culminating extends Application implements EventHandler<ActionEvent
     public static int userNum(TextField textField, Scene errorScene) {
         String input = textField.getText();
         int charNum = input.length();
+        int inputNum = 0;
+        boolean number = true;
         char[] digit = new char[charNum];
         for(int i = 0; i < charNum; i++) {
             if (Character.isDigit(digit[i]) == false) {
+                number = false;
                 window.setScene(errorScene);
-            }
-            else {
-                int inputNum = Integer.parseInt(input);
-                return inputNum;
+                break;
             }
         }
-        return 0;
+        if (number == true) {
+            inputNum = Integer.parseInt(input);
+        }
+        return inputNum;
     }
     
     /*
