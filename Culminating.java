@@ -212,7 +212,6 @@ public class Culminating extends Application implements EventHandler<ActionEvent
             } catch (IOException e1) {
             }
         });
-
         cont2.setOnAction(e -> {
             try {
                 line(math, questionNum1, errorScene);
@@ -265,22 +264,25 @@ public class Culminating extends Application implements EventHandler<ActionEvent
      * @param - File file
      * @return - String line
      */
-    public static String line(File file, TextField textField, Scene errorScene) throws FileNotFoundException {
+    public static void line(File file, TextField textField, Scene errorScene) throws FileNotFoundException {
         Scanner scan = new Scanner(file);
         int input = userNum(textField, errorScene);
-        int period = 0;
-        int numInText = 0;
+        System.out.println(input);
+        int textNum = 0;
         String line = "";
         while (scan.hasNextLine()) {
             line = scan.nextLine();
-            period = findPeriod(line);
-            numInText = questionNum(period, line);
-            if (numInText == input) {
-                return line;
+            System.out.println(line);
+            textNum = questionNum(line);
+            System.out.println(textNum);
+            
+            if (textNum == input) {
+                System.out.println(line);
+                //return line;
             }
+            
         }
-        System.out.println(line);
-        return "";
+        //return "";
     }
 
     /*
@@ -291,9 +293,10 @@ public class Culminating extends Application implements EventHandler<ActionEvent
      * @return - int period position
      */
     public static int findPeriod(String line) throws FileNotFoundException {
+        char period = '.';
         int lineLength = line.length();
         for (int i = 0; i < lineLength; i++) {
-            if (line.charAt(i) == '.') {
+            if (Character.compare(line.charAt(i), period) == 0) {
                 return i;
             }
         }
@@ -307,9 +310,14 @@ public class Culminating extends Application implements EventHandler<ActionEvent
      * @param - integer period position, String line
      * @return - integer question number
      */
-    public static int questionNum(int period, String line) throws FileNotFoundException {
+    public static int questionNum(String line) throws FileNotFoundException {
+        if (Character.isDigit(line.charAt(0)) == false) {
+            return 0;
+        }
+        int period = findPeriod(line);
         String questionNumStr = line.substring(0, period);
         int questionNum = Integer.parseInt(questionNumStr);
+        System.out.println(questionNum);
         return questionNum;
     }
 
@@ -326,8 +334,12 @@ public class Culminating extends Application implements EventHandler<ActionEvent
         int inputNum = 0;
         boolean number = true;
         char[] digit = new char[charNum];
+
         for(int i = 0; i < charNum; i++) {
-            if (Character.isDigit(digit[i]) == false) {
+            digit[i] = input.charAt(i);
+        }
+        for(int i = 0; i < charNum; i++) {
+            if (!(Character.isDigit(digit[i]))) {
                 number = false;
                 window.setScene(errorScene);
                 break;
@@ -348,9 +360,8 @@ public class Culminating extends Application implements EventHandler<ActionEvent
      */
     /*
     public static void question(File file, TextField textField, Scene errorScene) throws FileNotFoundException {
-        String line = line(file);
-        int period = findPeriod(line);
-        int numQuestion = questionNum(period, line);
+        String line = line(file, textField, errorScene);
+        int numQuestion = questionNum(line);
         int input = userNum(textField, errorScene);
         if (numQuestion == input) {
             System.out.println(line);
