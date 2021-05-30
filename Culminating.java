@@ -216,8 +216,18 @@ public class Culminating extends Application implements EventHandler<ActionEvent
             try {
                 line(math, questionNum1, errorScene);
             } catch (FileNotFoundException e1) {
-                // TODO Auto-generated catch block
-                e1.printStackTrace();
+            }
+        });
+        cont3.setOnAction(e -> {
+            try {
+                line(chem, questionNum2, errorScene);
+            } catch (FileNotFoundException e1) {
+            }
+        });
+        cont4.setOnAction(e -> {
+            try {
+                line(physics, questionNum3, errorScene);
+            } catch (FileNotFoundException e1) {
             }
         });
     }
@@ -277,12 +287,16 @@ public class Culminating extends Application implements EventHandler<ActionEvent
             else {
                 textNum = questionNum(line);
             }
-            if (textNum == input) {
+            if (input - textNum == 0) {
                 System.out.println(textNum + ", " + input);
                 System.out.println(line);
                 return line;
             }
-            
+            /*
+            else if (input < textNum || input > textNum) {
+                window.setScene(errorScene);
+            }
+            */
         }
         return line;
     }
