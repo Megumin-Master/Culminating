@@ -4,6 +4,8 @@
  * Teacher: Mr. Ho
  * Description: Culminating Assignment - Question Bank
  */
+
+// Importing everything needed to run this program
 import java.io.*;
 import java.util.*;
 import javafx.application.Application;
@@ -17,28 +19,34 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
+/*
+ * Author - Benjamin Kim
+ * Description - Holds almost every javafx variable in the program
+ */
 public class Culminating extends Application implements EventHandler<ActionEvent>{
     
-    static Stage window;
-    Scene scene1, scene2, scene201, scene3, scene301, scene4, sceneEnter, errorScene, previousScene1, previousScene2, editQuestion;
-    Button cont1, cont2, cont3, cont4, goBack1, goBack2, goBack3, goBack4, goBack5, goBack6, edit1, edit2, edit3, use1, use2, use3;
-    Label error, label9, questionLabel;
-    Label[] label8;
+    static Stage window;    // Naming the Stage, which is the window, to window
+    // All the scenes in this program
+    Scene intro, mathScene, chemScene, physicsScene, sceneEnter, errorScene, previousScene1, previousScene2, editQuestion;
+    // All the buttons used in this program
+    Button cont1, cont2, goBack1, goBack2, goBack3, goBack4, goBack5, goBack6, edit1, edit2, edit3, use1, use2, use3;
+    Label[] label8; // A label array because it is going to contain the same text in different scenes
+    // The 3 text files containing the questions
     File math = new File("Math.txt");
     File chem = new File("Chemistry.txt");
     File physics = new File("Physics.txt");
-    File readThis;
+    File readThis;  // Blank file as it is going to be one of the 3 above depending on what scene came before
 
     public static void main(String[] args) {
-        launch(args);
+        launch(args);  
     }
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        window = primaryStage;
-        window.setTitle("Question Bank");
+        window = primaryStage;  // Window is now officially the main stage
+        window.setTitle("Question Bank");   // Naming the window "Question Bank"
 
-        // Objects and their positions
+        // Labels and all their positions according to pixels
         Label label1 = new Label("Welcome to the Question Bank!");
         label1.setTranslateY(-80);
         Label label2 = new Label("Here, you can ask, change, and use");
@@ -51,203 +59,209 @@ public class Culminating extends Application implements EventHandler<ActionEvent
         Label label6 = new Label("Welcome to the Chemistry files!");
         Label label7 = new Label("Welcome to the Physics files!");
 
-        // Label that has a question
+        // Label array that makes duplicates of the same label
         label8 = new Label[3];
         for (int i = 0; i < 3; i++) {
             label8[i] = new Label("Would you like to make or use a question?");
             label8[i].setTranslateY(20);
         }
-
-        label9 = new Label("Which number question would you like to edit?");
-
-        error = new Label("The value you inputted is not valid. Go back and try again");
-
-        questionLabel = new Label();    // Blank label as it can change after each run
+        // More labels
+        Label label9 = new Label("Which number question would you like to edit?");
+        Label error = new Label("The value you inputted is not valid. Go back and try again");
+        Label questionLabel = new Label();    // Blank label as it can change after each run
 
         // Drop down menu
-        ComboBox<String> comboBox = new ComboBox<>();
-        comboBox.getItems().addAll("Math", "Chemistry", "Physics");
-        comboBox.setPromptText("Subjects");
-        comboBox.setTranslateY(10);
+        ComboBox<String> comboBox = new ComboBox<>();   // Making a drop down menu of strings
+        comboBox.getItems().addAll("Math", "Chemistry", "Physics"); // The options for the drop down menu
+        comboBox.setPromptText("Subjects"); // Before user selects an option, the box says subjects so the user knows the topic
+        comboBox.setTranslateY(10); // Positioning the drop down menu
 
         // A continue button for scene 1 after the user selects from the drop down menu
         cont1 = new Button("Continue");
         cont1.setTranslateY(50);
 
         // Go back buttons for the other scenes
+        int x = -160;   // X coordinate that is the same among all goBack buttons
+        int y = 130;    // Y coordinate that is the same among all goBack buttons
         goBack1 = new Button("Go Back");
-        goBack1.setTranslateX(-160);
-        goBack1.setTranslateY(130);
+        goBack1.setTranslateX(x);
+        goBack1.setTranslateY(y);
         goBack2 = new Button("Go Back");
-        goBack2.setTranslateX(-160);
-        goBack2.setTranslateY(130);
+        goBack2.setTranslateX(x);
+        goBack2.setTranslateY(y);
         goBack3 = new Button("Go Back");
-        goBack3.setTranslateX(-160);
-        goBack3.setTranslateY(130);
+        goBack3.setTranslateX(x);
+        goBack3.setTranslateY(y);
         goBack4 = new Button("Go Back");
-        goBack4.setTranslateX(-160);
-        goBack4.setTranslateY(130);
+        goBack4.setTranslateX(x);
+        goBack4.setTranslateY(y);
         goBack5 = new Button("Go Back");
-        goBack5.setTranslateX(-160);
-        goBack5.setTranslateY(130);
+        goBack5.setTranslateX(x);
+        goBack5.setTranslateY(y);
         goBack6 = new Button("Go Back");
-        goBack6.setTranslateX(-160);
-        goBack6.setTranslateY(130);
+        goBack6.setTranslateX(x);
+        goBack6.setTranslateY(y);
 
         // Buttons that send users to make their own questions
-        edit1 = new Button("Make Math Questions!");
+        edit1 = new Button("Make Math Questions!"); // The edit button for math questions
         edit1.setTranslateX(-75);
         edit1.setTranslateY(50);
-        edit2 = new Button("Make Chemistry Questions!");
+        edit2 = new Button("Make Chemistry Questions!");    // The edit button for chemistry questions
         edit2.setTranslateX(-80);
         edit2.setTranslateY(50);
-        edit3 = new Button("Make Physics Questions!");
+        edit3 = new Button("Make Physics Questions!");  // The edit button for physics questions
         edit3.setTranslateX(-80);
         edit3.setTranslateY(50);
 
         // Buttons that sends the user to copy and paste existing questions
-        use1 = new Button("Use Math Questions!");
+        use1 = new Button("Use Math Questions!");   // The use button for math questions
         use1.setTranslateX(80);
         use1.setTranslateY(50);
-        use2 = new Button("Use Chemistry Questions!");
+        use2 = new Button("Use Chemistry Questions!");  // The use button for chemistry questions
         use2.setTranslateX(80);
         use2.setTranslateY(50);
-        use3 = new Button("Use Physics Questions!");
+        use3 = new Button("Use Physics Questions!");    // The use button for physics questions
         use3.setTranslateX(75);
         use3.setTranslateY(50);
 
-        // Text fields
-        TextField questionNum1 = new TextField();
-        questionNum1.setMaxWidth(60);
-        questionNum1.setTranslateY(30);
-        TextField questionNum2 = new TextField();
-        questionNum2.setMaxWidth(60);
-        questionNum2.setTranslateY(30);
-        TextField questionNum3 = new TextField();
-        questionNum3.setMaxWidth(60);
-        questionNum3.setTranslateY(30);
+        // Making a text field which is a text box. It is essentially fill in the blank. This one is for the user to choose a question
+        TextField questionNum = new TextField();    
+        questionNum.setMaxWidth(60);    // Sets the length of the physical box. It is 60 pixels wide here
+        questionNum.setTranslateY(30);
 
-        // Continue buttons after user inputs something
+        // Continue button for after the user inputs something
         cont2 = new Button("Continue");
         cont2.setTranslateY(60);
-        cont3 = new Button("Continue");
-        cont3.setTranslateY(60);
-        cont4 = new Button("Continue");
-        cont4.setTranslateY(60);
         
         // The introduction scene
         StackPane layout1 = new StackPane();
-        layout1.getChildren().addAll(label1, label2, label3, label4, cont1, comboBox);
-        scene1 = new Scene(layout1, 300, 300);
+        // Uses specific variables chosen from above in a scene
+        layout1.getChildren().addAll(label1, label2, label3, label4, cont1, comboBox);  
+        intro = new Scene(layout1, 300, 300);   // The size of the scene
 
         // Math Scene
         StackPane layout2 = new StackPane();
+        // Uses specific variables chosen from above in a scene
         layout2.getChildren().addAll(label5, goBack1, label8[0], use1, edit1);
-        scene2 = new Scene(layout2, 400, 300);
+        mathScene = new Scene(layout2, 400, 300);   // The size of the scene
 
         // Chemistry Scene
         StackPane layout3 = new StackPane();
+        // Uses specific variables chosen from above in a scene
         layout3.getChildren().addAll(label6, goBack2, label8[1], use2, edit2);
-        scene3 = new Scene(layout3, 400, 300);
+        chemScene = new Scene(layout3, 400, 300);   // The size of the scene
 
         // Physics Scene
         StackPane layout4 = new StackPane();
+        // Uses specific variables chosen from above in a scene
         layout4.getChildren().addAll(label7, goBack3, label8[2], use3, edit3);
-        scene4 = new Scene(layout4, 400, 300);
+        physicsScene = new Scene(layout4, 400, 300);    // The size of the scene
 
         // Scene where user inputs question number
         StackPane layout5 = new StackPane();
-        layout5.getChildren().addAll(label9, questionNum1, cont2, goBack4);
-        sceneEnter = new Scene(layout5, 400, 300);
+        // Uses specific variables chosen from above in a scene
+        layout5.getChildren().addAll(label9, questionNum, cont2, goBack4);
+        sceneEnter = new Scene(layout5, 400, 300);  // The size of the scene
 
         // Error scene where it tells user an error has occured
         StackPane layout6 = new StackPane();
+        // Uses specific variables chosen from above in a scene
         layout6.getChildren().addAll(error, goBack5);
-        errorScene = new Scene(layout6, 400, 300);
+        errorScene = new Scene(layout6, 400, 300);  // The size of the scene
 
         // Scene that prints the question in the GUI
         
         StackPane layout7 = new StackPane();
+        // Uses specific variables chosen from above in a scene
         layout7.getChildren().addAll(questionLabel, goBack6);
-        editQuestion = new Scene(layout7, 400, 300);
+        editQuestion = new Scene(layout7, 400, 300);    // The size of the scene
         
         // Starts with scene 1
-        window.setScene(scene1);
-        window.show();
+        window.setScene(intro); // Tells program to start with the intro scene
+        window.show();  // Shows the scene
 
         // What happens when these buttons are clicked
-        cont1.setOnAction(e -> getChoice(comboBox, window));
-        goBack1.setOnAction(e -> window.setScene(scene1));
-        goBack2.setOnAction(e -> window.setScene(scene1));
-        goBack3.setOnAction(e -> window.setScene(scene1));
-        goBack4.setOnAction(e -> window.setScene(previousScene1));
-        goBack5.setOnAction(e -> window.setScene(previousScene2));
-        goBack6.setOnAction(e -> window.setScene(previousScene2));
+        cont1.setOnAction(e -> getChoice(comboBox, window));    // Runs the getChoice method when cont1 button is pressed
+        goBack1.setOnAction(e -> window.setScene(intro));       // Go Back button on math scene. Sends back to intro scene
+        goBack2.setOnAction(e -> window.setScene(intro));       // Go Back button on chemistry scene. Sends back to intro scene
+        goBack3.setOnAction(e -> window.setScene(intro));       // Go Back button on physics scene. Sends back to intro scene
+        goBack4.setOnAction(e -> window.setScene(previousScene1));  // Go Back button on sceneEnter. Sends back to scene they came from
+        goBack5.setOnAction(e -> window.setScene(previousScene2));  // Go Back button on errorScene. Sends back to sceneEnter
+        goBack6.setOnAction(e -> window.setScene(previousScene2));  // Go Back button on editQuestion scene. Sends back to sceneEnter
 
-        // When the user presses one of the use buttons, the program opens the notepad and the user can copy and paste from there.
-        use1.setOnAction(e -> {
+        // When the user presses one of the use buttons, the program opens the notepad to the subject chosen
+        // The user can copy and paste from there.
+        use1.setOnAction(e -> { // If use1 is pressed...
             try {
-                sendToFile(math);
+                sendToFile(math);   // Opens Math.txt in notepad
             } catch (IOException e1) {
             }
         });
-        use2.setOnAction(e -> {
+        use2.setOnAction(e -> { // If use2 is pressed...
             try {
-                sendToFile(chem);
+                sendToFile(chem);   // Opens Chemistry.txt in notepad
             } catch (IOException e1) {
             }
         });
-        use3.setOnAction(e -> {
+        use3.setOnAction(e -> { // If use3 is pressed...
             try {
-                sendToFile(physics);
+                sendToFile(physics);    // Opens Physics.txt in notepad
             } catch (IOException e1) {
             }
         });
 
-        // When user selects Make Questions
-        edit1.setOnAction(e -> {
+        // When user selects on the the edit buttons, the program opens notepad once again 
+        // and sends user to sceneEnter so they can choose a question to edit
+        edit1.setOnAction(e -> {    // When edit1 is pressed...
             try {
-                previousScene1 = edit1.getScene();
-                window.setScene(sceneEnter);
-                sendToFile(math);
-                readThis = math;
+                previousScene1 = edit1.getScene();  // Get the name of this scene to use in goBack buttons
+                window.setScene(sceneEnter);    // Goes to sceneEnter
+                sendToFile(math);   // Opens Math.txt in notepad
+                readThis = math;    // Gets file name to use when running a method
             } catch (IOException e1) {
             }
         });
-        edit2.setOnAction(e -> {
+        edit2.setOnAction(e -> {    // When edit2 is pressed...
             try {
-                previousScene1 = edit2.getScene();
-                window.setScene(sceneEnter);
-                sendToFile(chem);
-                readThis = chem;
+                previousScene1 = edit2.getScene();  // Get the name of this scene to use in goBack buttons
+                window.setScene(sceneEnter);    // Goes to sceneEnter
+                sendToFile(chem);   // Opens Chemistry.txt in notepad
+                readThis = chem;    // Gets file name to use when running a method
             } catch (IOException e1) {
             }
         });
-        edit3.setOnAction(e -> {
+        edit3.setOnAction(e -> {    // When edit3 is pressed...
             try {
-                previousScene1 = edit3.getScene();
-                window.setScene(sceneEnter);
-                sendToFile(physics);
-                readThis = physics;
+                previousScene1 = edit3.getScene();  // Get the name of this scene to use in goBack buttons
+                window.setScene(sceneEnter);    // Goes to sceneEnter
+                sendToFile(physics);    // Opens Physics.txt in notepad
+                readThis = physics;     // Gets file name to use when running a method
             } catch (IOException e1) {
             }
         });
 
         // What happens when the user selects the continue button after they type in a number
-        cont2.setOnAction(e -> {
+        cont2.setOnAction(e -> {    // When cont@ is pressed...
             try {
-                previousScene2 = cont2.getScene();
-                int input = userNum(questionNum1, errorScene, editQuestion);
-                String inputStr = Integer.toString(input);
-                int textNum = num(readThis, questionNum1, errorScene, editQuestion);
-                if (input == textNum) {
-                    String line = line(readThis, questionNum1, errorScene, editQuestion);
-                    questionLabel.setText(line);
+                previousScene2 = cont2.getScene();  // Get scene to use in goBack buttons
+                // Runs the userNum method and stores the integer. This is the number the user inputted in sceneEnter
+                int input = userNum(questionNum, errorScene, editQuestion); 
+                String inputStr = Integer.toString(input);  // Turns the integer into a string so it can be used in an if statement
+
+                // Runs the num method and stores the integer. This is the corresponding number in the text file to int input
+                int textNum = num(readThis, questionNum, errorScene, editQuestion);
+
+                if (input == textNum) { // If the 2 numbers are equal
+                    // Run the line method to get the question selected and store it as a string
+                    String line = line(readThis, questionNum, errorScene, editQuestion);   
+                    questionLabel.setText(line);    // Turn string into label. This is originally the empty label from earlier
                 }
-                else if (Character.isDigit(inputStr.charAt(0)) == false || input != textNum){
-                    window.setScene(errorScene);
+
+                else if (Character.isDigit(inputStr.charAt(0)) == false || input != textNum){   // If user input is not valid
+                    window.setScene(errorScene);    // Sends the user to the errorScene
                 }
             } catch (FileNotFoundException e1) {
+                // Nothing in here because there is no reason a file would not be found as the files are fixed
             }
         });
     }
@@ -263,13 +277,13 @@ public class Culminating extends Application implements EventHandler<ActionEvent
         String subject = comboBox.getValue();
 
         if (subject.equals("Math")) {
-            primaryStage.setScene(scene2);
+            primaryStage.setScene(mathScene);
         }
         else if(subject.equals("Chemistry")) {
-            primaryStage.setScene(scene3);
+            primaryStage.setScene(chemScene);
         }
         else if(subject.equals("Physics")) {
-            primaryStage.setScene(scene4);
+            primaryStage.setScene(physicsScene);
         }
     }
 
@@ -289,10 +303,10 @@ public class Culminating extends Application implements EventHandler<ActionEvent
     /*
      * Author - Benjamin Kim
      * Description - Goes through a specified file and looks for a line that's first character is an integer. 
-     *               It stores that line in a string.
+     *               It stores that line in a string. Same method as num, just returns different values
      * 
-     * @param - File file
-     * @return - String line
+     * @param - File file, TextField textField, Scene errorScene, Scene editQuestion
+     * @return - returns String line
      */
     public static String line(File file, TextField textField, Scene errorScene, Scene editQuestion) throws FileNotFoundException {
         Scanner scan = new Scanner(file);
@@ -313,6 +327,14 @@ public class Culminating extends Application implements EventHandler<ActionEvent
         }
         return line;
     }
+    /*
+     * Author - Benjamin Kim
+     * Description - Goes through a specified file and looks for a line that's first character is an integer. 
+     *               It stores that question number in an int. Same method as line, just returns different values
+     * 
+     * @param - File file, TextField textField, Scene errorScene, Scene editQuestion
+     * @return - returns Integer question number
+     */
     public static int num(File file, TextField textField, Scene errorScene, Scene editQuestion) throws FileNotFoundException {
         Scanner scan = new Scanner(file);
         int input = userNum(textField, errorScene, editQuestion);
@@ -335,7 +357,7 @@ public class Culminating extends Application implements EventHandler<ActionEvent
 
     /*
      * Author - Benjamin Kim 
-     * Description - Finds how many characters the period is to signal the end of the question number. Returns the position of the period
+     * Description - Finds how many characters in the period is to signal the end of the question number
      * 
      * @param - String line
      * @return - int period position
@@ -368,8 +390,9 @@ public class Culminating extends Application implements EventHandler<ActionEvent
     /*
      * Author - Benjamin Kim
      * Description - Gets the number the user typed in the blank. Also sends user to a error scene if they input an invalid value.
+     *               Sends user to editQuestion scene if everything is fine
      * 
-     * @param - TextField textField, Scene errorScene
+     * @param - TextField textField, Scene errorScene, Scene editQuestion
      * @return - integer user input number
      */
     public static int userNum(TextField textField, Scene errorScene, Scene editQuestion) {
