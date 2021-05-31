@@ -274,16 +274,16 @@ public class Culminating extends Application implements EventHandler<ActionEvent
      * @return - No return
      */
     public void getChoice(ComboBox<String> comboBox, Stage primaryStage) {
-        String subject = comboBox.getValue();
+        String subject = comboBox.getValue();   // Gets the string value of the option the user chose
 
-        if (subject.equals("Math")) {
-            primaryStage.setScene(mathScene);
+        if (subject.equals("Math")) {   // If the string equals "Math"
+            primaryStage.setScene(mathScene);   // Goes to math scene
         }
-        else if(subject.equals("Chemistry")) {
-            primaryStage.setScene(chemScene);
+        else if(subject.equals("Chemistry")) {  // If the string equals "Chemistry"
+            primaryStage.setScene(chemScene);   // Goes to chem scene
         }
-        else if(subject.equals("Physics")) {
-            primaryStage.setScene(physicsScene);
+        else if(subject.equals("Physics")) {    // if the string equals "Physics"
+            primaryStage.setScene(physicsScene);    // Goes to physics scene
         }
     }
 
@@ -295,9 +295,9 @@ public class Culminating extends Application implements EventHandler<ActionEvent
      * @return - No return
      */
     public void sendToFile(File file) throws IOException {
-        String fileName = file.getName();
-        ProcessBuilder pb = new ProcessBuilder("Notepad.exe", fileName);
-        pb.start();
+        String fileName = file.getName();   // Stores the name of the file in a string
+        ProcessBuilder pb = new ProcessBuilder("Notepad.exe", fileName);    // Opens the file in a notepad
+        pb.start(); // To make it start
     }
 
     /*
@@ -309,23 +309,23 @@ public class Culminating extends Application implements EventHandler<ActionEvent
      * @return - returns String line
      */
     public static String line(File file, TextField textField, Scene errorScene, Scene editQuestion) throws FileNotFoundException {
-        Scanner scan = new Scanner(file);
-        int input = userNum(textField, errorScene, editQuestion);
-        int textNum = 0;
-        String line = "";
-        while (scan.hasNextLine()) {
-            line = scan.nextLine();
-            if (Character.isDigit(line.charAt(0)) == false) {
-                line = scan.nextLine();
+        Scanner scan = new Scanner(file);   // Scans the file
+        int input = userNum(textField, errorScene, editQuestion);   // Gets the input of the user in sceneEnter
+        int textNum = 0;    // Initializing the integer textNum which will change
+        String line = "";   // Initializing the string line which will change
+        while (scan.hasNextLine()) {    // If there is a next line in the file
+            line = scan.nextLine();     // line equals the next line
+            if (Character.isDigit(line.charAt(0)) == false) {   // If the first character of the line isn't a number
+                line = scan.nextLine(); // Scan the next line and store it
             }
-            else {
-                textNum = questionNum(line);
+            else {  // If the character is a number
+                textNum = questionNum(line);    // Run the questionNum method to get the number
             }
-            if (input == textNum) {
-                return line;
+            if (input == textNum) { // If the 2 numbers match
+                return line;    // return the line
             }
         }
-        return line;
+        return line;    // Otherwise, return a blank string
     }
     /*
      * Author - Benjamin Kim
@@ -336,23 +336,23 @@ public class Culminating extends Application implements EventHandler<ActionEvent
      * @return - returns Integer question number
      */
     public static int num(File file, TextField textField, Scene errorScene, Scene editQuestion) throws FileNotFoundException {
-        Scanner scan = new Scanner(file);
-        int input = userNum(textField, errorScene, editQuestion);
-        int textNum = 0;
-        String line = "";
-        while (scan.hasNextLine()) {
-            line = scan.nextLine();
-            if (Character.isDigit(line.charAt(0)) == false) {
-                line = scan.nextLine();
+        Scanner scan = new Scanner(file);   // Scans the file
+        int input = userNum(textField, errorScene, editQuestion);   // Gets the input of the user in sceneEnter
+        int textNum = 0;    // Initializing the integer textNum which will change
+        String line = "";   // Initializing the string line which will change
+        while (scan.hasNextLine()) {    // If there is a next line in the file
+            line = scan.nextLine();     // line equals the next line
+            if (Character.isDigit(line.charAt(0)) == false) {   // If the first character of the line isn't a number
+                line = scan.nextLine(); // Scan the next line and store it
             }
-            else {
-                textNum = questionNum(line);
+            else {  // If the character is a number
+                textNum = questionNum(line);    // Run the questionNum method to get the number
             }
-            if (input == textNum) {
-                return textNum;
+            if (input == textNum) { // If the 2 numbers match
+                return textNum;    // return the number in the file
             }
         }
-        return textNum;
+        return textNum;    // Otherwise, return 0
     }
 
     /*
@@ -363,14 +363,13 @@ public class Culminating extends Application implements EventHandler<ActionEvent
      * @return - int period position
      */
     public static int findPeriod(String line) throws FileNotFoundException {
-        char period = '.';
-        int lineLength = line.length();
-        for (int i = 0; i < lineLength; i++) {
-            if (Character.compare(line.charAt(i), period) == 0) {
-                return i;
+        int lineLength = line.length(); // Gets the length of the line for the for loop
+        for (int i = 0; i < lineLength; i++) {  // Runs as many time as the line length  
+            if (line.charAt(i) == '.') {     // If at any point the character in the line is '.', the loop stops
+                return i;   // It returns the index '.' was at
             }
         }
-        return 0;
+        return 0; // If '.' is not there, it returns 0
     }
 
     /* 
@@ -381,10 +380,10 @@ public class Culminating extends Application implements EventHandler<ActionEvent
      * @return - integer question number
      */
     public static int questionNum(String line) throws FileNotFoundException {
-        int period = findPeriod(line);
-        String questionNumStr = line.substring(0, period);
-        int questionNum = Integer.parseInt(questionNumStr);
-        return questionNum;
+        int period = findPeriod(line);  // Runs the findPeriod method from above
+        String questionNumStr = line.substring(0, period);  // Gets the question number using substring as a string
+        int questionNum = Integer.parseInt(questionNumStr); // Turns the string into a integer
+        return questionNum; // It returns that integer
     }
 
     /*
@@ -396,30 +395,30 @@ public class Culminating extends Application implements EventHandler<ActionEvent
      * @return - integer user input number
      */
     public static int userNum(TextField textField, Scene errorScene, Scene editQuestion) {
-        String input = textField.getText();
-        int charNum = input.length();
-        int inputNum = 0;
-        boolean number = true;
-        char[] digit = new char[charNum];
+        String input = textField.getText(); // Stores what the user inputted in a string
+        int charNum = input.length();   // Gets the length of the string
+        int inputNum = 0;   // Initializing the integer which will change later
+        boolean number = true;  // Boolean to see if the number is valid or not
+        char[] digit = new char[charNum];   // A character array for the user input. It has the same amount of values as charNum
 
-        for(int i = 0; i < charNum; i++) {
-            digit[i] = input.charAt(i);
+        for(int i = 0; i < charNum; i++) {  // For loop to store values in the array
+            digit[i] = input.charAt(i); 
         }
-        for(int i = 0; i < charNum; i++) {
-            if (!(Character.isDigit(digit[i]))) {
-                number = false;
-                window.setScene(errorScene);
-                break;
+        for(int i = 0; i < charNum; i++) {  // For loop to go through the newly stored values to see if they are valid
+            if (!(Character.isDigit(digit[i]))) {   // If the character is not a number
+                number = false; // Number is not valid
+                window.setScene(errorScene);    // Goes to the errorScene
+                break;  // Exits loop
             }
         }
-        if (number == true) {
-            window.setScene(editQuestion);
-            inputNum = Integer.parseInt(input);
+        if (number == true) {   // If the number stays true the entire time...
+            window.setScene(editQuestion);  // Goes to scene editQuestion
+            inputNum = Integer.parseInt(input); // Changes string input into an integer
         }
-        return inputNum;
+        return inputNum;    // returns the integer
     }
 
     @Override
-    public void handle(ActionEvent arg0) {
+    public void handle(ActionEvent arg0) {  // Needed for javafx
     }
 }
