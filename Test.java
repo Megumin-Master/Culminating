@@ -17,11 +17,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
-public class Culminating extends Application implements EventHandler<ActionEvent>{
+public class Test extends Application implements EventHandler<ActionEvent>{
     
     static Stage window;
     Scene scene1, scene2, scene201, scene3, scene301, scene4, sceneEnter, errorScene, previousScene1, previousScene2, editQuestion;
-    Button cont1, cont2, cont3, cont4, goBack1, goBack2, goBack3, goBack4, goBack5, goBack6, edit1, edit2, edit3, use1, use2, use3;
+    Button cont1, cont2, cont3, cont4, goBack1, goBack2, goBack3, goBack4, goBack5, edit1, edit2, edit3, use1, use2, use3;
     Label error, label9, questionLabel;
     Label[] label8;
     File math = new File("Math.txt");
@@ -90,9 +90,6 @@ public class Culminating extends Application implements EventHandler<ActionEvent
         goBack5 = new Button("Go Back");
         goBack5.setTranslateX(-160);
         goBack5.setTranslateY(130);
-        goBack6 = new Button("Go Back");
-        goBack6.setTranslateX(-160);
-        goBack6.setTranslateY(130);
 
         // Buttons that send users to make their own questions
         edit1 = new Button("Make Math Questions!");
@@ -168,7 +165,7 @@ public class Culminating extends Application implements EventHandler<ActionEvent
         // Scene that prints the question in the GUI
         
         StackPane layout7 = new StackPane();
-        layout7.getChildren().addAll(questionLabel, goBack6);
+        layout7.getChildren().addAll(questionLabel);
         editQuestion = new Scene(layout7, 400, 300);
         
         // Starts with scene 1
@@ -181,8 +178,6 @@ public class Culminating extends Application implements EventHandler<ActionEvent
         goBack2.setOnAction(e -> window.setScene(scene1));
         goBack3.setOnAction(e -> window.setScene(scene1));
         goBack4.setOnAction(e -> window.setScene(previousScene1));
-        goBack5.setOnAction(e -> window.setScene(previousScene2));
-        goBack6.setOnAction(e -> window.setScene(previousScene2));
 
         // When the user presses one of the use buttons, the program opens the notepad and the user can copy and paste from there.
         use1.setOnAction(e -> {
@@ -250,6 +245,7 @@ public class Culminating extends Application implements EventHandler<ActionEvent
             } catch (FileNotFoundException e1) {
             }
         });
+        goBack5.setOnAction(e -> window.setScene(previousScene2));
     }
     
     /*
