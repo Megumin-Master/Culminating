@@ -29,12 +29,13 @@ public class Culminating extends Application implements EventHandler<ActionEvent
     // All the scenes in this program
     Scene intro, mathScene, chemScene, physicsScene, sceneEnter, errorScene, previousScene1, previousScene2, editQuestion;
     // All the buttons used in this program
-    Button cont1, cont2, goBack1, goBack2, goBack3, goBack4, goBack5, goBack6, edit1, edit2, edit3, use1, use2, use3;
+    Button cont1, cont2, goBack1, goBack2, goBack3, goBack4, goBack5, goBack6, edit1, edit2, edit3, use1, use2, use3, openDict;
     Label[] label8; // A label array because it is going to contain the same text in different scenes
     // The 3 text files containing the questions
     File math = new File("Math.txt");
     File chem = new File("Chemistry.txt");
     File physics = new File("Physics.txt");
+    File dictionary = new File("Dictionary.txt");
     File readThis;  // Blank file as it is going to be one of the 3 above depending on what scene came before
 
     public static void main(String[] args) {
@@ -68,6 +69,11 @@ public class Culminating extends Application implements EventHandler<ActionEvent
         // More labels
         Label label9 = new Label("Which number question would you like to edit?");
         Label error = new Label("The value you inputted is not valid. Go back and try again");
+        Label justInCase = new Label("Enter only as many values as there are in the original question");
+        justInCase.setTranslateY(20);
+        Label dict = new Label("Dictionary:");
+        dict.setTranslateX(50);
+        dict.setTranslateY(130);
         Label questionLabel = new Label();    // Blank label as it can change after each run
 
         // Drop down menu
@@ -103,13 +109,13 @@ public class Culminating extends Application implements EventHandler<ActionEvent
         goBack6.setTranslateY(y);
 
         // Buttons that send users to make their own questions
-        edit1 = new Button("Make Math Questions!"); // The edit button for math questions
+        edit1 = new Button("Edit Math Questions!"); // The edit button for math questions
         edit1.setTranslateX(-75);
         edit1.setTranslateY(50);
-        edit2 = new Button("Make Chemistry Questions!");    // The edit button for chemistry questions
+        edit2 = new Button("Edit Chemistry Questions!");    // The edit button for chemistry questions
         edit2.setTranslateX(-80);
         edit2.setTranslateY(50);
-        edit3 = new Button("Make Physics Questions!");  // The edit button for physics questions
+        edit3 = new Button("Edit Physics Questions!");  // The edit button for physics questions
         edit3.setTranslateX(-80);
         edit3.setTranslateY(50);
 
@@ -124,14 +130,37 @@ public class Culminating extends Application implements EventHandler<ActionEvent
         use3.setTranslateX(75);
         use3.setTranslateY(50);
 
-        // Making a text field which is a text box. It is essentially fill in the blank. This one is for the user to choose a question
-        TextField questionNum = new TextField();    
-        questionNum.setMaxWidth(60);    // Sets the length of the physical box. It is 60 pixels wide here
-        questionNum.setTranslateY(30);
+        // Making a text field which is a text box. It is essentially fill in the blank. 
+        int w = 60; // All boxes would be 60 pixels wide
+        int Y = 50; // All boxes have this y coordinate
+        TextField questionNum = new TextField();    // Text field where user inputs the question number they want to edit
+        questionNum.setMaxWidth(w);    // Sets the length of the physical box
+        questionNum.setTranslateY(30);  // Sets the position of the box
+        TextField value1 = new TextField("Value 1"); // Text field for the first value in any question. Has text so user knows what it is
+        value1.setMaxWidth(w);  // Sets length of physical box
+        value1.setTranslateX(-110); 
+        value1.setTranslateY(Y);    
+        TextField value2 = new TextField("Value 2"); // Text field for the first value in any question. Has text so user knows what it is
+        value2.setMaxWidth(w);  // Sets length of physical box
+        value2.setTranslateX(-36); 
+        value2.setTranslateY(Y);    
+        TextField value3 = new TextField("Value 3"); // Text field for the first value in any question. Has text so user knows what it is
+        value3.setMaxWidth(w);  // Sets length of physical box
+        value3.setTranslateX(36); 
+        value3.setTranslateY(Y);    
+        TextField value4 = new TextField("Value 4"); // Text field for the first value in any question. Has text so user knows what it is
+        value4.setMaxWidth(w);  // Sets length of physical box
+        value4.setTranslateX(110); 
+        value4.setTranslateY(Y);    
 
         // Continue button for after the user inputs something
         cont2 = new Button("Continue");
         cont2.setTranslateY(60);
+
+        // openDict button. Opens a glossary of functions and formulas
+        openDict = new Button("Open Dictionary");
+        openDict.setTranslateX(135);
+        openDict.setTranslateY(130);
         
         // The introduction scene
         StackPane layout1 = new StackPane();
@@ -173,7 +202,7 @@ public class Culminating extends Application implements EventHandler<ActionEvent
         
         StackPane layout7 = new StackPane();
         // Uses specific variables chosen from above in a scene
-        layout7.getChildren().addAll(questionLabel, goBack6);
+        layout7.getChildren().addAll(questionLabel, goBack6, justInCase, dict, openDict, value1, value2, value3, value4);
         editQuestion = new Scene(layout7, 400, 300);    // The size of the scene
         
         // Starts with scene 1
@@ -262,6 +291,14 @@ public class Culminating extends Application implements EventHandler<ActionEvent
                 }
             } catch (FileNotFoundException e1) {
                 // Nothing in here because there is no reason a file would not be found as the files are fixed
+            }
+        });
+
+        // What happens when openDict is pressed
+        openDict.setOnAction(e -> {
+            try {
+                sendToFile(dictionary);
+            } catch (IOException e1) {
             }
         });
     }
