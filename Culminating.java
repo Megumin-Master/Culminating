@@ -27,16 +27,21 @@ public class Culminating extends Application implements EventHandler<ActionEvent
     
     static Stage window;    // Naming the Stage, which is the window, to window
     // All the scenes in this program
-    Scene intro, mathScene, chemScene, physicsScene, sceneEnter, errorScene, previousScene1, previousScene2, editQuestion;
+    Scene intro, mathScene, chemScene, physicsScene, sceneEnter, errorScene; 
+    Scene previousScene1, previousScene2, previousScene3, editQuestion, useQuestion, copyQuestion, printAnswer;
     // All the buttons used in this program
-    Button cont1, cont2, goBack1, goBack2, goBack3, goBack4, goBack5, goBack6, edit1, edit2, edit3, use1, use2, use3, openDict, calculate;
+    Button cont1, cont2, cont3, goBack1, goBack2, goBack3, goBack4, goBack5, goBack6, goBack7, goBack8, goBack9;
+    Button edit1, edit2, edit3, use1, use2, use3, openDict, calculate;
     Label[] label8; // A label array because it is going to contain the same text in different scenes
-    // The 3 text files containing the questions
+    // The text files 
     File math = new File("Math.txt");
+    File mathA = new File("Math Answers.txt");
     File chem = new File("Chemistry.txt");
+    File chemA = new File("Chemistry Answers.txt");
     File physics = new File("Physics.txt");
+    File physicsA = new File("Physics Answers.txt");
     File dictionary = new File("Dictionary.txt");
-    File readThis;  // Blank file as it is going to be one of the 3 above depending on what scene came before
+    File readThis, readThisA;  // Blank file as it is going to be one of the files above depending on what scene came before
 
     public static void main(String[] args) {
         launch(args);  
@@ -76,7 +81,12 @@ public class Culminating extends Application implements EventHandler<ActionEvent
         dict.setTranslateX(50);
         dict.setTranslateY(130);
         Label questionLabel = new Label();    // Blank label as it can change after each run
-        questionLabel.setTranslateY(-40);   // Setting the position
+        questionLabel.setTranslateY(-40);   
+        Label label10 = new Label("Which question would you like to use?");
+        Label usedQuestion = new Label();   // Blank label as it can change after each run
+        Label usedQuestionA = new Label();  // Blank label as it can change after each run
+        usedQuestionA.setTranslateY(40);
+        Label edittedAnswer = new Label();  // Blank label as it can change after each run
 
         // Drop down menu
         ComboBox<String> comboBox = new ComboBox<>();   // Making a drop down menu of strings
@@ -109,6 +119,15 @@ public class Culminating extends Application implements EventHandler<ActionEvent
         goBack6 = new Button("Go Back");
         goBack6.setTranslateX(x);
         goBack6.setTranslateY(y);
+        goBack7 = new Button("Go Back");
+        goBack7.setTranslateX(x);
+        goBack7.setTranslateY(y);
+        goBack8 = new Button("Go Back");
+        goBack8.setTranslateX(x);
+        goBack8.setTranslateY(y);
+        goBack9 = new Button("Go Back");
+        goBack9.setTranslateX(x);
+        goBack9.setTranslateY(y);
 
         // Buttons that send users to make their own questions
         edit1 = new Button("Edit Math Questions!"); // The edit button for math questions
@@ -138,6 +157,9 @@ public class Culminating extends Application implements EventHandler<ActionEvent
         TextField questionNum = new TextField();    // Text field where user inputs the question number they want to edit
         questionNum.setMaxWidth(w);    // Sets the length of the physical box
         questionNum.setTranslateY(30);  // Sets the position of the box
+        TextField questionNum2 = new TextField();   // Text field where user inputs the question they want to use
+        questionNum2.setMaxWidth(w);    // Sets length of the physical box
+        questionNum2.setTranslateY(30);
         TextField value1 = new TextField("Value 1"); // Text field for the first value in any question. Has text so user knows what it is
         value1.setMaxWidth(w);  // Sets length of physical box
         value1.setTranslateX(-110); 
@@ -158,6 +180,8 @@ public class Culminating extends Application implements EventHandler<ActionEvent
         // Continue button for after the user inputs something
         cont2 = new Button("Continue");
         cont2.setTranslateY(60);
+        cont3 = new Button("Continue");
+        cont3.setTranslateY(60);
 
         // openDict button. Opens a glossary of functions and formulas
         openDict = new Button("Open Dictionary");
@@ -167,6 +191,7 @@ public class Culminating extends Application implements EventHandler<ActionEvent
         // Calculate button to calculate the new values
         calculate = new Button("Calculate");    // Making a new button called calculate
         calculate.setTranslateY(80);    // Positioning the button
+
         // The introduction scene
         StackPane layout1 = new StackPane();
         // Uses specific variables chosen from above in a scene
@@ -191,7 +216,7 @@ public class Culminating extends Application implements EventHandler<ActionEvent
         layout4.getChildren().addAll(label7, goBack3, label8[2], use3, edit3);
         physicsScene = new Scene(layout4, 400, 300);    // The size of the scene
 
-        // Scene where user inputs question number
+        // Scene where user inputs question number they want to edit
         StackPane layout5 = new StackPane();
         // Uses specific variables chosen from above in a scene
         layout5.getChildren().addAll(label9, questionNum, cont2, goBack4);
@@ -202,13 +227,26 @@ public class Culminating extends Application implements EventHandler<ActionEvent
         // Uses specific variables chosen from above in a scene
         layout6.getChildren().addAll(error, goBack5);
         errorScene = new Scene(layout6, 400, 300);  // The size of the scene
-
-        // Scene that prints the question in the GUI
         
         StackPane layout7 = new StackPane();
         // Uses specific variables chosen from above in a scene
         layout7.getChildren().addAll(questionLabel, goBack6, justInCase, num, dict, openDict, value1, value2, value3, value4, calculate);
         editQuestion = new Scene(layout7, 400, 300);    // The size of the scene
+
+        // Scene where user can choose which question they want to use
+        StackPane layout8 = new StackPane();
+        layout8.getChildren().addAll(label10, questionNum2, cont3, goBack7);
+        useQuestion = new Scene(layout8, 400, 300);
+
+        // Copy Question scene where it brings user to a scene with the question they chose to use and the answer as well
+        StackPane layout9 = new StackPane();
+        layout9.getChildren().addAll(usedQuestion, usedQuestionA, goBack8);
+        copyQuestion = new Scene(layout9, 400, 300);
+
+        // Scene where the answer of the new values are calculated and then shown
+        StackPane layout10 = new StackPane();
+        layout10.getChildren().addAll(edittedAnswer, goBack9);
+        printAnswer = new Scene(layout10, 400, 300);
         
         // Starts with scene 1
         window.setScene(intro); // Tells program to start with the intro scene
@@ -222,24 +260,39 @@ public class Culminating extends Application implements EventHandler<ActionEvent
         goBack4.setOnAction(e -> window.setScene(previousScene1));  // Go Back button on sceneEnter. Sends back to scene they came from
         goBack5.setOnAction(e -> window.setScene(previousScene2));  // Go Back button on errorScene. Sends back to sceneEnter
         goBack6.setOnAction(e -> window.setScene(previousScene2));  // Go Back button on editQuestion scene. Sends back to sceneEnter
+        goBack7.setOnAction(e -> window.setScene(previousScene1));  // Go Back button on useQuestion. Sends back to scene they came from
+        goBack8.setOnAction(e -> window.setScene(previousScene2));  // Go Back button on copyQuestion. Sends back to useQuestion
+        goBack9.setOnAction(e -> window.setScene(previousScene3));  // Go Back button on printAnswer. Sends back to editQuestion
 
         // When the user presses one of the use buttons, the program opens the notepad to the subject chosen
         // The user can copy and paste from there.
         use1.setOnAction(e -> { // If use1 is pressed...
             try {
+                previousScene1 = use1.getScene();   // Get the name of this scene to use in goBack buttons
+                window.setScene(useQuestion);   // Goes to scene
                 sendToFile(math);   // Opens Math.txt in notepad
+                readThis = math;    // Stores question file
+                readThisA = mathA;  // Stores answer file
             } catch (IOException e1) {
             }
         });
         use2.setOnAction(e -> { // If use2 is pressed...
             try {
+                previousScene1 = use2.getScene();   // Get the name of this scene to use in goBack buttons
+                window.setScene(useQuestion);   // Goes to scene
                 sendToFile(chem);   // Opens Chemistry.txt in notepad
+                readThis = chem;    // Stores question file
+                readThisA = chemA;  // Stores answer file
             } catch (IOException e1) {
             }
         });
         use3.setOnAction(e -> { // If use3 is pressed...
             try {
+                previousScene1 = use3.getScene();   // Get the name of this scene to use in goBack buttons
+                window.setScene(useQuestion);   // Goes to scene
                 sendToFile(physics);    // Opens Physics.txt in notepad
+                readThis = physics;     // Stores question file
+                readThisA = physicsA;   // Stores answer file
             } catch (IOException e1) {
             }
         });
@@ -275,7 +328,7 @@ public class Culminating extends Application implements EventHandler<ActionEvent
         });
 
         // What happens when the user selects the continue button after they type in a number
-        cont2.setOnAction(e -> {    // When cont@ is pressed...
+        cont2.setOnAction(e -> {    // When cont2 is pressed...
             try {
                 previousScene2 = cont2.getScene();  // Get scene to use in goBack buttons
                 // Runs the userNum method and stores the integer. This is the number the user inputted in sceneEnter
@@ -299,10 +352,38 @@ public class Culminating extends Application implements EventHandler<ActionEvent
             }
         });
 
+        // What happens when the user selects the continue button after they type in a number when they want to use a question
+        cont3.setOnAction(e -> {
+            try {
+                previousScene2 = cont3.getScene();  // Get scene to use in goBack buttons
+                // Runs the userNum method and stores the integer. This is the number the user inputted in sceneEnter
+                int input = userNum(questionNum2, errorScene, copyQuestion); 
+                String inputStr = Integer.toString(input);  // Turns the integer into a string so it can be used in an if statement
+    
+                // Runs the num method and stores the integer. This is the corresponding number in the text file to int input
+                int textNum = num(readThis, questionNum2, errorScene, copyQuestion);    // The question
+                int textNum2 = num(readThisA, questionNum2, errorScene, copyQuestion);  // The asnwer
+    
+                if (input == textNum && input == textNum2) { // If the 2 numbers are equal
+                    // Run the line method to get the question selected and store it as a string
+                    String line = line(readThis, questionNum2, errorScene, copyQuestion);   // The question
+                    String lineAnswer = line(readThisA, questionNum2, errorScene, copyQuestion);    // The answer
+                    usedQuestion.setText("Question #" + line);    // Turn string into label. This is originally the empty question label from earlier
+                    usedQuestionA.setText("Answer #" + lineAnswer);  // Turn string into label. This is originally the empty answer label from earlier
+                }
+    
+                else if (Character.isDigit(inputStr.charAt(0)) == false || input != textNum || input != textNum2){   // If user input is not valid
+                    window.setScene(errorScene);    // Sends the user to the errorScene
+                }
+            } catch (FileNotFoundException e1) {
+                // Nothing in here because there is no reason a file would not be found as the files are fixed
+            }
+        });
+
         // What happens when openDict is pressed
         openDict.setOnAction(e -> {
             try {
-                sendToFile(dictionary);
+                sendToFile(dictionary); // Opens a glossary
             } catch (IOException e1) {
             }
         });
@@ -310,7 +391,10 @@ public class Culminating extends Application implements EventHandler<ActionEvent
         // What happens when calculate is pressed
         calculate.setOnAction( e -> {
             try {
-                answer(questionLabel, readThis, value1, value2, value3, value4);
+                previousScene3 = calculate.getScene();  // Gets scene for go back button
+                String answer = answer(questionLabel, readThis, value1, value2, value3, value4);    // Stores return value in string
+                edittedAnswer.setText("Answer is: " + answer);  // The answer label is this
+                window.setScene(printAnswer);   // Goes to scene
             } catch (FileNotFoundException e1) {
                 e1.printStackTrace();
             }
@@ -445,7 +529,7 @@ public class Culminating extends Application implements EventHandler<ActionEvent
      * @param - TextField textField, Scene errorScene, Scene editQuestion
      * @return - integer user input number
      */
-    public static int userNum(TextField textField, Scene errorScene, Scene editQuestion) {
+    public static int userNum(TextField textField, Scene errorScene, Scene editOrUse) {
         String input = textField.getText(); // Stores what the user inputted in a string
         int charNum = input.length();   // Gets the length of the string
         int inputNum = 0;   // Initializing the integer which will change later
@@ -463,46 +547,55 @@ public class Culminating extends Application implements EventHandler<ActionEvent
             }
         }
         if (number == true) {   // If the number stays true the entire time...
-            window.setScene(editQuestion);  // Goes to scene editQuestion
+            window.setScene(editOrUse);  // Goes to scene editQuestion
             inputNum = Integer.parseInt(input); // Changes string input into an integer
         }
         return inputNum;    // returns the integer
     }
-
+    
+    /*
+     * Author - Benjamin Kim
+     * Description - Takes the values that the user inputted and return an answer depending on the question and file selected
+     * 
+     * @param - Label question, File file, TextField value1, TextField value2, TextField value3, TextField value4
+     * @return - String answer
+     */
     public static String answer(Label question, File file, TextField value1, TextField value2, TextField value3, TextField value4) throws FileNotFoundException {
-        double answerNum = 0;
-        String questionStr = question.getText();
-        int questionNumber = questionNum(questionStr);
-        String fileName = file.getName();
+        double answerNum = 0;   // Starting with a value of 0. It changes
+        String questionStr = question.getText();    // Gets the string inside the label
+        int questionNumber = questionNum(questionStr);  // Gets the question number from the string we just extracted
+        String fileName = file.getName();   // Gets the string version of the file name
         
         // Getting the values from the fill in the blank
-        double num1 = Double.parseDouble(value1.getText());
-        double num2 = Double.parseDouble(value2.getText());
-        double num3 = Double.parseDouble(value3.getText());
-        double num4 = Double.parseDouble(value4.getText());
+        double num1 = Double.parseDouble(value1.getText()); // Turns the user input from value 1 into a double
+        double num2 = Double.parseDouble(value2.getText()); // Turns the user input from value 2 into a double
+        double num3 = Double.parseDouble(value3.getText()); // Turns the user input from value 3 into a double
+        double num4 = Double.parseDouble(value4.getText()); // Turns the user input from value 4 into a double
 
-        if (fileName == "Math.txt") {
-            if (questionNumber == 1) {
+        if (fileName == "Math.txt") {   // Since the files are premade, we do not need to worry about file not found exceptions
+            if (questionNumber == 1) {  // If the question is _ number, it runs _ method
                 
             }
             else if (questionNumber == 2) {
-
+                answerNum = math2(num1, num2, num3);
             }
             else if (questionNumber == 3) {
                 answerNum = math3(num1, num2, num3);
             }
         }
-        String answer = Double.toString(answerNum);
-        System.out.println(answer);
-        return answer;
+        String answer = Double.toString(answerNum); // Turns the final answer to a string to put in a label
+        return answer;  // Returns the string
     }
     
     public static double math3(double value1, double value2, double value3) {
         double answer = value1*value2/value3;
         return answer;
+    } 
+    public static double math2 (double value1, double value2, double value3) {
+        double answer = value2*value3 + value1;
+        return answer;
     }
     
-
     @Override
     public void handle(ActionEvent arg0) {  // Needed for javafx
     }
