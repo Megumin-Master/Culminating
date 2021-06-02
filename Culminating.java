@@ -29,7 +29,7 @@ public class Culminating extends Application implements EventHandler<ActionEvent
     // All the scenes in this program
     Scene intro, mathScene, chemScene, physicsScene, sceneEnter, errorScene, previousScene1, previousScene2, editQuestion;
     // All the buttons used in this program
-    Button cont1, cont2, goBack1, goBack2, goBack3, goBack4, goBack5, goBack6, edit1, edit2, edit3, use1, use2, use3, openDict;
+    Button cont1, cont2, goBack1, goBack2, goBack3, goBack4, goBack5, goBack6, edit1, edit2, edit3, use1, use2, use3, openDict, calculate;
     Label[] label8; // A label array because it is going to contain the same text in different scenes
     // The 3 text files containing the questions
     File math = new File("Math.txt");
@@ -69,12 +69,14 @@ public class Culminating extends Application implements EventHandler<ActionEvent
         // More labels
         Label label9 = new Label("Which number question would you like to edit?");
         Label error = new Label("The value you inputted is not valid. Go back and try again");
-        Label justInCase = new Label("Enter only as many values as there are in the original question");
-        justInCase.setTranslateY(20);
+        Label justInCase = new Label("Enter the values in the same order as the original question");
+        justInCase.setTranslateY(-20);
+        Label num = new Label("Only enter numbers. Enter '0' for values not used");
         Label dict = new Label("Dictionary:");
         dict.setTranslateX(50);
         dict.setTranslateY(130);
         Label questionLabel = new Label();    // Blank label as it can change after each run
+        questionLabel.setTranslateY(-40);   // Setting the position
 
         // Drop down menu
         ComboBox<String> comboBox = new ComboBox<>();   // Making a drop down menu of strings
@@ -132,7 +134,7 @@ public class Culminating extends Application implements EventHandler<ActionEvent
 
         // Making a text field which is a text box. It is essentially fill in the blank. 
         int w = 60; // All boxes would be 60 pixels wide
-        int Y = 50; // All boxes have this y coordinate
+        int Y = 40; // All boxes have this y coordinate
         TextField questionNum = new TextField();    // Text field where user inputs the question number they want to edit
         questionNum.setMaxWidth(w);    // Sets the length of the physical box
         questionNum.setTranslateY(30);  // Sets the position of the box
@@ -161,7 +163,10 @@ public class Culminating extends Application implements EventHandler<ActionEvent
         openDict = new Button("Open Dictionary");
         openDict.setTranslateX(135);
         openDict.setTranslateY(130);
-        
+
+        // Calculate button to calculate the new values
+        calculate = new Button("Calculate");    // Making a new button called calculate
+        calculate.setTranslateY(80);    // Positioning the button
         // The introduction scene
         StackPane layout1 = new StackPane();
         // Uses specific variables chosen from above in a scene
@@ -202,7 +207,7 @@ public class Culminating extends Application implements EventHandler<ActionEvent
         
         StackPane layout7 = new StackPane();
         // Uses specific variables chosen from above in a scene
-        layout7.getChildren().addAll(questionLabel, goBack6, justInCase, dict, openDict, value1, value2, value3, value4);
+        layout7.getChildren().addAll(questionLabel, goBack6, justInCase, num, dict, openDict, value1, value2, value3, value4, calculate);
         editQuestion = new Scene(layout7, 400, 300);    // The size of the scene
         
         // Starts with scene 1
@@ -299,6 +304,15 @@ public class Culminating extends Application implements EventHandler<ActionEvent
             try {
                 sendToFile(dictionary);
             } catch (IOException e1) {
+            }
+        });
+
+        // What happens when calculate is pressed
+        calculate.setOnAction( e -> {
+            try {
+                answer(questionLabel, readThis, value1, value2, value3, value4);
+            } catch (FileNotFoundException e1) {
+                e1.printStackTrace();
             }
         });
     }
@@ -454,6 +468,40 @@ public class Culminating extends Application implements EventHandler<ActionEvent
         }
         return inputNum;    // returns the integer
     }
+
+    public static String answer(Label question, File file, TextField value1, TextField value2, TextField value3, TextField value4) throws FileNotFoundException {
+        double answerNum = 0;
+        String questionStr = question.getText();
+        int questionNumber = questionNum(questionStr);
+        String fileName = file.getName();
+        
+        // Getting the values from the fill in the blank
+        double num1 = Double.parseDouble(value1.getText());
+        double num2 = Double.parseDouble(value2.getText());
+        double num3 = Double.parseDouble(value3.getText());
+        double num4 = Double.parseDouble(value4.getText());
+
+        if (fileName == "Math.txt") {
+            if (questionNumber == 1) {
+                
+            }
+            else if (questionNumber == 2) {
+
+            }
+            else if (questionNumber == 3) {
+                answerNum = math3(num1, num2, num3);
+            }
+        }
+        String answer = Double.toString(answerNum);
+        System.out.println(answer);
+        return answer;
+    }
+    
+    public static double math3(double value1, double value2, double value3) {
+        double answer = value1*value2/value3;
+        return answer;
+    }
+    
 
     @Override
     public void handle(ActionEvent arg0) {  // Needed for javafx
