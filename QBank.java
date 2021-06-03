@@ -21,6 +21,8 @@ public class QBank {
         Scanner sc = new Scanner(System.in);
         // Create all possible variables used
         int choice = 9;
+        String question = null;
+        String subject = new String();
 
         // Print the main menu and prompt the user to choose
         do{
@@ -36,10 +38,10 @@ public class QBank {
                 funcDictionary();
             }
             else if((choice == 2) && (createFile())){
-                uploadQuestion();
+                uploadQuestion(subject);
             }
             else if(choice == 3){
-                readFile();
+                readFile(question);
             }
         }while(choice != 0);
     }
@@ -94,11 +96,10 @@ public class QBank {
         return true;
     }
 
-    public static void uploadQuestion(){
+    public static boolean uploadQuestion(String subject){
         FileWriter fw = null;
         BufferedWriter bw = null;
         PrintWriter pw = null;
-        String subject = new String();
         String requestA = "Now write down your word problem.\n";
         String requestB = "The titile of the question should be in the bracket.\n";
         String requestC = "And remember to enter the known condition in Arabic numerals.\n";
@@ -170,12 +171,12 @@ public class QBank {
                 e.printStackTrace();
             }
         }
+        return true;
     }
 
-    public static void readFile(){
+    public static String readFile(String question){
         String title, subject, reader, choice;
         Scanner fileReader = null;
-        String question = null;
 
         Scanner sc = new Scanner(System.in);
         System.out.println("Choose the subject.");
@@ -228,9 +229,10 @@ public class QBank {
         }
         else{
         }
+        return question;
     }
 
-    public static void generateQuestion(String question){
+    public static String generateQuestion(String question){
         Scanner sc = new Scanner(System.in);
         int var, num;
         int count = -1;
@@ -269,7 +271,7 @@ public class QBank {
                 System.out.println(orig[i]);
                 if((orig[i] != null) && (!value[i + 1].equals(""))){
                     sb.setCharAt(orig[i], value[i + 1].charAt(0));
-                    newQuestion = sb.toString();
+                    question = sb.toString();
                 }
             }
         }
@@ -277,6 +279,6 @@ public class QBank {
             System.out.println("An error occurred.");
         }
         
-        System.out.println(newQuestion);
+        return(question);
     }
 }
