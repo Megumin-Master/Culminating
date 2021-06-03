@@ -162,21 +162,17 @@ public class Culminating extends Application implements EventHandler<ActionEvent
         questionNum2.setTranslateY(30);
         TextField value1 = new TextField("Value 1"); // Text field for the first value in any question. Has text so user knows what it is
         value1.setMaxWidth(w);  // Sets length of physical box
-        value1.setTranslateX(-110); 
+        value1.setTranslateX(-70); 
         value1.setTranslateY(Y);    
         TextField value2 = new TextField("Value 2"); // Text field for the first value in any question. Has text so user knows what it is
         value2.setMaxWidth(w);  // Sets length of physical box
-        value2.setTranslateX(-36); 
+        //value2.setTranslateX(); 
         value2.setTranslateY(Y);    
         TextField value3 = new TextField("Value 3"); // Text field for the first value in any question. Has text so user knows what it is
         value3.setMaxWidth(w);  // Sets length of physical box
-        value3.setTranslateX(36); 
+        value3.setTranslateX(70); 
         value3.setTranslateY(Y);    
-        TextField value4 = new TextField("Value 4"); // Text field for the first value in any question. Has text so user knows what it is
-        value4.setMaxWidth(w);  // Sets length of physical box
-        value4.setTranslateX(110); 
-        value4.setTranslateY(Y);    
-
+    
         // Continue button for after the user inputs something
         cont2 = new Button("Continue");
         cont2.setTranslateY(60);
@@ -230,7 +226,7 @@ public class Culminating extends Application implements EventHandler<ActionEvent
         
         StackPane layout7 = new StackPane();
         // Uses specific variables chosen from above in a scene
-        layout7.getChildren().addAll(questionLabel, goBack6, justInCase, num, dict, openDict, value1, value2, value3, value4, calculate);
+        layout7.getChildren().addAll(questionLabel, goBack6, justInCase, num, dict, openDict, value1, value2, value3, calculate);
         editQuestion = new Scene(layout7, 400, 300);    // The size of the scene
 
         // Scene where user can choose which question they want to use
@@ -392,7 +388,7 @@ public class Culminating extends Application implements EventHandler<ActionEvent
         calculate.setOnAction( e -> {
             try {
                 previousScene3 = calculate.getScene();  // Gets scene for go back button
-                String answer = answer(questionLabel, readThis, value1, value2, value3, value4);    // Stores return value in string
+                String answer = answer(questionLabel, readThis, value1, value2, value3);    // Stores return value in string
                 edittedAnswer.setText("Answer is: " + answer);  // The answer label is this
                 window.setScene(printAnswer);   // Goes to scene
             } catch (FileNotFoundException e1) {
@@ -560,7 +556,7 @@ public class Culminating extends Application implements EventHandler<ActionEvent
      * @param - Label question, File file, TextField value1, TextField value2, TextField value3, TextField value4
      * @return - String answer
      */
-    public static String answer(Label question, File file, TextField value1, TextField value2, TextField value3, TextField value4) throws FileNotFoundException {
+    public static String answer(Label question, File file, TextField value1, TextField value2, TextField value3) throws FileNotFoundException {
         double answerNum = 0;   // Starting with a value of 0. It changes
         String questionStr = question.getText();    // Gets the string inside the label
         int questionNumber = questionNum(questionStr);  // Gets the question number from the string we just extracted
@@ -570,7 +566,6 @@ public class Culminating extends Application implements EventHandler<ActionEvent
         double num1 = Double.parseDouble(value1.getText()); // Turns the user input from value 1 into a double
         double num2 = Double.parseDouble(value2.getText()); // Turns the user input from value 2 into a double
         double num3 = Double.parseDouble(value3.getText()); // Turns the user input from value 3 into a double
-        double num4 = Double.parseDouble(value4.getText()); // Turns the user input from value 4 into a double
 
         if (fileName == "Math.txt") {   // Since the files are premade, we do not need to worry about file not found exceptions
             if (questionNumber == 1) {  // If the question is _ number, it runs _ method
