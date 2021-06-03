@@ -578,6 +578,12 @@ public class Culminating extends Application implements EventHandler<ActionEvent
                 answerNum = math3(num1, num2, num3);
             }
         }
+
+        if (fileName == "Chemistry.txt") {
+            if (questionNumber == 1) {
+                answerNum = chem1(num1, num2);
+            }
+        }
         String answer = Double.toString(answerNum); // Turns the final answer to a string to put in a label
         return answer;  // Returns the string
     }
@@ -588,6 +594,10 @@ public class Culminating extends Application implements EventHandler<ActionEvent
     } 
     public static double math2 (double value1, double value2, double value3) {
         double answer = value2*value3 + value1;
+        return answer;
+    }
+    public static double chem1 (double value1, double value2) {
+        double answer = value1/value2;
         return answer;
     }
     
