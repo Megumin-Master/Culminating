@@ -1,6 +1,12 @@
 You can copy and paste questions as you need
 
-1.  Hello my friend
-2.  This is getting on my nerves
-3.  Why tf would 3 or 4 not work
-4.  This is the most random error 
+1.  M = 25 g / 5 mol
+2.  n = 120 g / 44 g/mol
+3.  V2 = 15 L x 423 k / 293 k
+4.  P2 = 300 kPa x 8 L / 5 L
+5.  m = 5.3 mol x 32 g/mol
+6.  PT = 101.32 kPa + 273 kPa
+7.  C = 12.4 mol / 7 L
+8.  Cf = 2.5 mol / ( 5 L + 2 L )
+9.  Vi = 0.5 M x 1 L / 12 M
+10.  P2 = 135.5 kPa x 576 K / 288 K
