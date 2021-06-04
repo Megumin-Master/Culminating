@@ -14,8 +14,6 @@ import java.io.PrintWriter;
 import java.util.Hashtable;
 import java.util.Scanner;
 
-import java.util.ArrayList;
-
 public class QBank {
     public static void main(String[] args){
         Scanner sc = new Scanner(System.in);
@@ -234,15 +232,13 @@ public class QBank {
 
     public static String generateQuestion(String question){
         Scanner sc = new Scanner(System.in);
-        int var, num;
+        int num;
         int count = -1;
-        String character;
 
         System.out.println("Enter the number of known conditions.");
         num = sc.nextInt();
         String[] value = new String[num + 1];
         Integer[] orig = new Integer[num + 1];
-        String newQuestion = " ";
 
         for(int i = 0; i< question.length(); i++){
             try{
