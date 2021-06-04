@@ -99,8 +99,6 @@ public class QBank {
         BufferedWriter bw = null;
         PrintWriter pw = null;
         String requestA = "Now write down your word problem.\n";
-        String requestB = "The titile of the question should be in the bracket.\n";
-        String requestC = "And remember to enter the known condition in Arabic numerals.\n";
         Scanner sc = new Scanner(System.in);
         System.out.println("Choose the subject of your word problem.");
         subject = sc.nextLine();      
@@ -112,9 +110,7 @@ public class QBank {
                 pw = new PrintWriter(bw);
 
                 System.out.println(requestA
-                .concat("Ex. [Area problem]The rectangle is 5cm in length and 2cm in width, what is its area?\n")
-                .concat(requestB)
-                .concat(requestC)
+                .concat("Ex. 1. The rectangle is 5cm in length and 2cm in width, what is its area?\n")
                 );
 
                 pw.println(sc.nextLine());
@@ -133,9 +129,7 @@ public class QBank {
                 pw = new PrintWriter(bw);
 
                 System.out.println(requestA
-                .concat("Ex. [mole calculation]The molar mass for magnesium is 24 g/mol, how many moles are in 2140 g of magnesium?\n")
-                .concat(requestB)
-                .concat(requestC)
+                .concat("Ex. 2. The molar mass for magnesium is 24 g/mol, how many moles are in 2140 g of magnesium?\n")
                 );
 
                 pw.println(sc.nextLine());
@@ -154,9 +148,7 @@ public class QBank {
                 pw = new PrintWriter(bw);
 
                 System.out.println(requestA
-                .concat("Ex. [gravitational force problem]The mass of an object is 19 kg, the gravitational constant is 9.8 N/kg, what's the force the earth exerts on the object?\n")
-                .concat(requestB)
-                .concat(requestC)
+                .concat("Ex. 3. The mass of an object is 19 kg, the gravitational constant is 9.8 N/kg, what's the force the earth exerts on the object?\n")
                 );
 
                 pw.println(sc.nextLine());
@@ -174,6 +166,7 @@ public class QBank {
 
     public static String readFile(String question){
         String title, subject, reader, choice;
+        int num;
         Scanner fileReader = null;
 
         Scanner sc = new Scanner(System.in);
@@ -200,47 +193,47 @@ public class QBank {
                 }
             } 
             
-            System.out.println("Enter the title of the question (Without brakets).");
+            System.out.println("Enter the title of the question.");
             title = sc.nextLine();
             while(fileReader.hasNextLine()){
                 reader =fileReader.nextLine();
-                if(reader.substring(reader.indexOf("[") + 1, reader.indexOf("]")).equals(title)){
+                if(Character.toString(reader.charAt(0)).equals(title)){
                     question = reader;
-                    System.out.println(question);
                     break;
                 }
                 else{
                     System.out.println("Question not found.");
-                    break;
                 }
             }
         }
         catch (FileNotFoundException e){
             System.out.println("An error occurred.");
-            e.printStackTrace();
         }
 
+        System.out.println(question);
         System.out.println("Wanna change the known conditions? Enter 'yes' if you do.");
         choice = sc.nextLine();
         if(choice.equals("yes")){
-            System.out.println(generateQuestion(question));
+            System.out.println("Num of conditions:");
+            num = sc.nextInt();
+            int[] value = new int[num];
+            System.out.println("New values: ");
+            for(int i = 0; i < num; i++){
+                value[i] = sc.nextInt();
+            }
+            System.out.println(generateQuestion(question, num, value));
         }
         else{
         }
         return question;
     }
 
-    public static String generateQuestion(String question){
+    public static String generateQuestion(String question, int num, int[] value){
         Scanner sc = new Scanner(System.in);
-        int num;
         int count = -1;
+        Integer[] orig = new Integer[num];
 
-        System.out.println("Enter the number of known conditions.");
-        num = sc.nextInt();
-        String[] value = new String[num + 1];
-        Integer[] orig = new Integer[num + 1];
-
-        for(int i = 0; i< question.length(); i++){
+        for(int i = 3; i< question.length(); i++){
             try{
                 if(Character.isDigit(question.charAt(i))){
                     count += 1;
@@ -252,21 +245,16 @@ public class QBank {
         }
 
         StringBuilder sb = new StringBuilder(question);
-        System.out.println("Enter the new value in order of precedence.");
-        for(int i = 0; i< num + 1; i++){
-            value[i] = sc.nextLine();
-        }
-
         try{
             for(int i = 0; i< num; i++){
-                if((orig[i] != null) && (!value[i + 1].equals(""))){
-                    sb.setCharAt(orig[i], value[i + 1].charAt(0));
+                if((orig[i] != null) && (value[i] != 0)){
+                    sb.setCharAt(orig[i], (char)(value[i] + 48));
                     question = sb.toString();
                 }
             }
         }
         catch(NullPointerException npe){
-            System.out.println("An error occurred.");
+            return("An error occurred.");
         }
         
         return(question);

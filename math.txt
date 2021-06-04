@@ -1,2 +1,2 @@
-[Area problem]The rectangle is 5cm in length and 2cm in width, what is its area?
+1. The rectangle is 5cm in length and 2cm in width, what is its area?
 
