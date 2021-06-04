@@ -267,8 +267,6 @@ public class QBank {
 
         try{
             for(int i = 0; i< num; i++){
-                System.out.println(value[i + 1]);
-                System.out.println(orig[i]);
                 if((orig[i] != null) && (!value[i + 1].equals(""))){
                     sb.setCharAt(orig[i], value[i + 1].charAt(0));
                     question = sb.toString();
