@@ -260,15 +260,9 @@ public class QBank {
         for(int i = 0; i< num + 1; i++){
             value[i] = sc.nextLine();
         }
-        
-        System.out.println("value0: " + value[0]);
-        System.out.println("value1: " + value[1]);
-        System.out.println("value1: " + value[2]);
 
         try{
             for(int i = 0; i< num; i++){
-                System.out.println(value[i + 1]);
-                System.out.println(orig[i]);
                 if((orig[i] != null) && (!value[i + 1].equals(""))){
                     sb.setCharAt(orig[i], value[i + 1].charAt(0));
                     question = sb.toString();
