@@ -223,7 +223,7 @@ public class QBank {
         System.out.println("Wanna change the known conditions? Enter 'yes' if you do.");
         choice = sc.nextLine();
         if(choice.equals("yes")){
-            generateQuestion(question);
+            System.out.println(generateQuestion(question));
         }
         else{
         }
