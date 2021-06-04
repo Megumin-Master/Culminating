@@ -553,7 +553,7 @@ public class Culminating extends Application implements EventHandler<ActionEvent
      * Author - Benjamin Kim
      * Description - Takes the values that the user inputted and return an answer depending on the question and file selected
      * 
-     * @param - Label question, File file, TextField value1, TextField value2, TextField value3, TextField value4
+     * @param - Label question, File file, TextField value1, TextField value2, TextField value3
      * @return - String answer
      */
     public static String answer(Label question, File file, TextField value1, TextField value2, TextField value3) throws FileNotFoundException {
