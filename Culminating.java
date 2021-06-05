@@ -554,7 +554,7 @@ public class Culminating extends Application implements EventHandler<ActionEvent
     }
     
     /*
-     * Author - Benjamin Kim
+     * Author - Benjamin Kim, David Han, Jeffrey Lin
      * Description - Takes the values that the user inputted and return an answer depending on the question and file selected
      * 
      * @param - Label question, File file, TextField value1, TextField value2, TextField value3, TextField value4
