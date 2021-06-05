@@ -33,6 +33,7 @@ public class Culminating extends Application implements EventHandler<ActionEvent
     Button cont1, cont2, cont3, goBack1, goBack2, goBack3, goBack4, goBack5, goBack6, goBack7, goBack8, goBack9;
     Button edit1, edit2, edit3, use1, use2, use3, openDict, calculate;
     Label[] label8; // A label array because it is going to contain the same text in different scenes
+    String[] qAndA; 
     // The text files 
     File math = new File("Math.txt");
     File mathA = new File("Math Answers.txt");
@@ -86,6 +87,8 @@ public class Culminating extends Application implements EventHandler<ActionEvent
         Label usedQuestion = new Label();   // Blank label as it can change after each run
         Label usedQuestionA = new Label();  // Blank label as it can change after each run
         usedQuestionA.setTranslateY(40);
+        Label edittedQuestion = new Label(); // Blank label as it can change after each run
+        edittedQuestion.setTranslateY(-40);
         Label edittedAnswer = new Label();  // Blank label as it can change after each run
 
         // Drop down menu
@@ -241,7 +244,7 @@ public class Culminating extends Application implements EventHandler<ActionEvent
 
         // Scene where the answer of the new values are calculated and then shown
         StackPane layout10 = new StackPane();
-        layout10.getChildren().addAll(edittedAnswer, goBack9);
+        layout10.getChildren().addAll(edittedQuestion, edittedAnswer, goBack9);
         printAnswer = new Scene(layout10, 400, 300);
         
         // Starts with scene 1
@@ -388,7 +391,8 @@ public class Culminating extends Application implements EventHandler<ActionEvent
         calculate.setOnAction( e -> {
             try {
                 previousScene3 = calculate.getScene();  // Gets scene for go back button
-                String[] qAndA = answer(questionLabel, readThis, value1, value2, value3);    // Stores return value in string
+                qAndA = answer(questionLabel, readThis, value1, value2, value3);    // Stores return value in string
+                edittedQuestion.setText(qAndA[0]);  // The question label is this
                 edittedAnswer.setText("Answer is: " + qAndA[1]);  // The answer label is this
                 window.setScene(printAnswer);   // Goes to scene
             } catch (FileNotFoundException e1) {
@@ -571,7 +575,7 @@ public class Culminating extends Application implements EventHandler<ActionEvent
 
         if (fileName == "Math.txt") {   // Since the files are premade, we do not need to worry about file not found exceptions
             if (questionNumber == 1) {  // If the question is _ number, it runs _ method
-                String equation = ("9 x 5");
+                String equation = (num1 + " x " + num2);
                 int conditions = 2;
                 double[] list = {num1, num2, num3};
                 newQuestion = generateQuestion(questionStr, conditions, list);
