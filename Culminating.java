@@ -568,7 +568,6 @@ public class Culminating extends Application implements EventHandler<ActionEvent
         double num3 = Double.parseDouble(value3.getText()); // Turns the user input from value 3 into a double
 
         String newQuestion = "";
-        double answer = 0.0;
 
         if (fileName == "Math.txt") {   // Since the files are premade, we do not need to worry about file not found exceptions
             if (questionNumber == 1) {  // If the question is _ number, it runs _ method
@@ -576,7 +575,8 @@ public class Culminating extends Application implements EventHandler<ActionEvent
                 int conditions = 2;
                 double[] list = {num1, num2, num3};
                 newQuestion = generateQuestion(questionStr, conditions, list);
-                answer = UserSolution(num1, num2, num3, questionStr);
+                System.out.println(newQuestion);
+                answerNum = UserSolution(num1, num2, num3, questionStr);
             }
             else if (questionNumber == 2) {
                 
