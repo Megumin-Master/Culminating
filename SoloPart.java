@@ -568,13 +568,7 @@ public class SoloPart extends Application implements EventHandler<ActionEvent>{
         double num3 = Double.parseDouble(value3.getText()); // Turns the user input from value 3 into a double
 
         if (fileName == "Math.txt") {   // Since the files are premade, we do not need to worry about file not found exceptions
-            if (questionNumber == 1) {  // If the question is _ number, it runs _ method
-                
-            }
-            else if (questionNumber == 2) {
-                
-            }
-            else if (questionNumber == 3) {
+            if (questionNumber == 1) {  // If the question is _ number
                 
             }
         }
@@ -582,6 +576,12 @@ public class SoloPart extends Application implements EventHandler<ActionEvent>{
         if (fileName == "Chemistry.txt") {
             if (questionNumber == 1) {
                 
+            }
+        }
+
+        if (fileName == "Physics.txt") {
+            if (questionNumber == 1) {
+
             }
         }
         String answer = Double.toString(answerNum); // Turns the final answer to a string to put in a label
