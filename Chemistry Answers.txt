@@ -1,0 +1,7 @@
+Answers correspond to the questions in Chemistry.txt according to the number.
+
+1.  0.4
+2.  1.25
+3.  2.22
+4.  4.8
+5.  18

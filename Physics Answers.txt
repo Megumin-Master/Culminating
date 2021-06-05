@@ -1,0 +1,7 @@
+Answers correspond to the questions in Physics.txt according to the number.
+
+1.  6
+2.  0.33
+3.  0.71
+4.  4.8
+5.  63
