@@ -571,7 +571,7 @@ public class Culminating extends Application implements EventHandler<ActionEvent
 
         if (fileName == "Math.txt") {   // Since the files are premade, we do not need to worry about file not found exceptions
             if (questionNumber == 1) {  // If the question is _ number, it runs _ method
-                String equation = ("1.  " + num1 + " x " + num2);
+                String equation = ("9 x 5");
                 int conditions = 2;
                 double[] list = {num1, num2, num3};
                 newQuestion = generateQuestion(questionStr, conditions, list);
