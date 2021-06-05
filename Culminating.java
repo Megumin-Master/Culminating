@@ -663,14 +663,28 @@ public class Culminating extends Application implements EventHandler<ActionEvent
     public void handle(ActionEvent arg0) {  // Needed for javafx
     }
 
+    /*
+     * Author - Yuyang Liu
+     * 
+     * Description - Allows user to change the known conditions in specific question to create a new word problem
+     * 
+     * @param -
+     *  question: string of the specific question user chosen
+     *  num: number of known conditions needed to be replaced
+     *  value[]: double array with the size of num
+     * @return - String question (knwon conditions are replaced by new values)
+     * */
     public static String generateQuestion(String question, int num, double[] value){
+        // Initialise all the variables
         Scanner sc = new Scanner(System.in);
         int count = -1;
-        Integer[] orig = new Integer[num];
+        Integer[] orig = new Integer[num];  // Stores the index of known conditions in the original word problem
 
+        // Skip the first three digit
+        // Ensure that the question# will not disturb the counting process
         for(int i = 3; i< question.length(); i++){
             try{
-                if(Character.isDigit(question.charAt(i))){
+                if(Character.isDigit(question.charAt(i))){  // Check if the character is a number
                     count += 1;
                     orig[count] = i;
                 }
@@ -683,7 +697,7 @@ public class Culminating extends Application implements EventHandler<ActionEvent
         try{
             for(int i = 0; i< num; i++){
                 if((orig[i] != null) && (value[i] != 0)){
-                    sb.setCharAt(orig[i], (char)(value[i] + 48));
+                    sb.setCharAt(orig[i], (char)(value[i] + 48));   // Replace characters within the original word problem
                     question = sb.toString();
                 }
             }
