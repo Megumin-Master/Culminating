@@ -1,0 +1,1 @@
+[gravitational force problem]The mass of an object is 19 kg, the gravitational constant is 9.8 N/kg, what's the force the earth exerts on the object?
