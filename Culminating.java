@@ -704,8 +704,26 @@ public class Culminating extends Application implements EventHandler<ActionEvent
         double counter1 = 0.0;
         double answer = 0.0;
         // SETTING UP BEDMAS FOR *
+
+        if(Operation[3] == null){
+            if(Operation[1].equals("x")){
+                answer += num[0] * num[2];
+            }
+            else if(Operation[1].equals("/")){
+                answer += num[0] / num[2];
+            }
+            else if(Operation[1].equals("-")){
+                answer += num[0] - num[2];
+            }
+            else if(Operation[1].equals("+")){
+                answer += num[0] + num[2];
+            }
+            else if(Operation[1].equals("^")){
+                answer += Math.pow(num[0], num[2]);
+            }
+        }
         
-        if(Operation[5] == null){
+        else if(Operation[5] == null){
             
             if(Operation[1].equals("x")){
                 if(Operation[3].equals("^")){
