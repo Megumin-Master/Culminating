@@ -571,12 +571,13 @@ public class Culminating extends Application implements EventHandler<ActionEvent
 
         if (fileName == "Math.txt") {   // Since the files are premade, we do not need to worry about file not found exceptions
             if (questionNumber == 1) {  // If the question is _ number, it runs _ method
-                String equation = num1 + " x " + num2;
+                String equation = ("1.  " + num1 + " x " + num2);
                 int conditions = 2;
                 double[] list = {num1, num2, num3};
                 newQuestion = generateQuestion(questionStr, conditions, list);
                 System.out.println(newQuestion);
-                answerNum = UserSolution(num1, num2, num3, questionStr);
+                answerNum = UserSolution(num1, num2, num3, equation);
+                System.out.println(answerNum);
             }
             else if (questionNumber == 2) {
                 
@@ -584,10 +585,46 @@ public class Culminating extends Application implements EventHandler<ActionEvent
             else if (questionNumber == 3) {
                 
             }
+            else if (questionNumber == 4) {
+
+            }
+            else if (questionNumber == 5) {
+
+            }
         }
 
         if (fileName == "Chemistry.txt") {
             if (questionNumber == 1) {
+                
+            }
+            else if (questionNumber == 2) {
+
+            } 
+            else if (questionNumber == 3) {
+
+            }
+            else if (questionNumber == 4) {
+
+            }
+            else if (questionNumber == 5) {
+
+            }
+        }
+
+        if (fileName == "Physics.txt") {
+            if (questionNumber == 1) {
+                
+            }
+            else if (questionNumber == 2) {
+
+            } 
+            else if (questionNumber == 3) {
+
+            }
+            else if (questionNumber == 4) {
+
+            }
+            else if (questionNumber == 5) {
                 
             }
         }
@@ -607,7 +644,7 @@ public class Culminating extends Application implements EventHandler<ActionEvent
         int count = -1;
         Integer[] orig = new Integer[num];
 
-        for(int i = 3; i< question.length() - 3; i++){
+        for(int i = 3; i< question.length(); i++){
             try{
                 if(Character.isDigit(question.charAt(i))){
                     count += 1;
