@@ -1,6 +1,6 @@
-Math is cool
+Answers correspond to the questions in Math.txt according to the number.
 
-1.  2
+1.  50
 2.  7
 3.  1.5
 4.  107.625

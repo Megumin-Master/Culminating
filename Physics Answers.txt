@@ -1,6 +1,7 @@
-Hi
+Answers correspond to the questions in Physics.txt according to the number.
 
-1.  Hello
-2.  Bonjour
-3.  Salut
-4.  Comment cava
+1.  Answer 1
+2.  Answer 2
+3.  Answer 3
+4.  Answer 4
+5.  Answer 5

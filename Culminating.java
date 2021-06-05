@@ -388,8 +388,8 @@ public class Culminating extends Application implements EventHandler<ActionEvent
         calculate.setOnAction( e -> {
             try {
                 previousScene3 = calculate.getScene();  // Gets scene for go back button
-                String answer = answer(questionLabel, readThis, value1, value2, value3);    // Stores return value in string
-                edittedAnswer.setText("Answer is: " + answer);  // The answer label is this
+                String[] qAndA = answer(questionLabel, readThis, value1, value2, value3);    // Stores return value in string
+                edittedAnswer.setText("Answer is: " + qAndA[1]);  // The answer label is this
                 window.setScene(printAnswer);   // Goes to scene
             } catch (FileNotFoundException e1) {
                 e1.printStackTrace();
@@ -556,7 +556,7 @@ public class Culminating extends Application implements EventHandler<ActionEvent
      * @param - Label question, File file, TextField value1, TextField value2, TextField value3, TextField value4
      * @return - String answer
      */
-    public static String answer(Label question, File file, TextField value1, TextField value2, TextField value3) throws FileNotFoundException {
+    public static String[] answer(Label question, File file, TextField value1, TextField value2, TextField value3) throws FileNotFoundException {
         double answerNum = 0;   // Starting with a value of 0. It changes
         String questionStr = question.getText();    // Gets the string inside the label
         int questionNumber = questionNum(questionStr);  // Gets the question number from the string we just extracted
@@ -567,41 +567,493 @@ public class Culminating extends Application implements EventHandler<ActionEvent
         double num2 = Double.parseDouble(value2.getText()); // Turns the user input from value 2 into a double
         double num3 = Double.parseDouble(value3.getText()); // Turns the user input from value 3 into a double
 
+        String newQuestion = "";
+        double answer = 0.0;
+
         if (fileName == "Math.txt") {   // Since the files are premade, we do not need to worry about file not found exceptions
             if (questionNumber == 1) {  // If the question is _ number, it runs _ method
-                
+                String equation = num1 + " x " + num2;
+                int conditions = 2;
+                double[] list = {num1, num2, num3};
+                newQuestion = generateQuestion(questionStr, conditions, list);
+                answer = UserSolution(num1, num2, num3, questionStr);
             }
             else if (questionNumber == 2) {
-                answerNum = math2(num1, num2, num3);
+                
             }
             else if (questionNumber == 3) {
-                answerNum = math3(num1, num2, num3);
+                
             }
         }
 
         if (fileName == "Chemistry.txt") {
             if (questionNumber == 1) {
-                answerNum = chem1(num1, num2);
+                
             }
         }
         String answer = Double.toString(answerNum); // Turns the final answer to a string to put in a label
-        return answer;  // Returns the string
+
+        String[] qAndA = {newQuestion, answer};
+        return qAndA;  // Returns the string
     }
     
-    public static double math3(double value1, double value2, double value3) {
-        double answer = value1*value2/value3;
-        return answer;
-    } 
-    public static double math2 (double value1, double value2, double value3) {
-        double answer = value2*value3 + value1;
-        return answer;
-    }
-    public static double chem1 (double value1, double value2) {
-        double answer = value1/value2;
-        return answer;
-    }
     
     @Override
     public void handle(ActionEvent arg0) {  // Needed for javafx
     }
+
+    public static String generateQuestion(String question, int num, double[] value){
+        Scanner sc = new Scanner(System.in);
+        int count = -1;
+        Integer[] orig = new Integer[num];
+
+        for(int i = 3; i< question.length(); i++){
+            try{
+                if(Character.isDigit(question.charAt(i))){
+                    count += 1;
+                    orig[count] = i;
+                }
+            }
+            catch(NumberFormatException nfe){
+            }
+        }
+
+        StringBuilder sb = new StringBuilder(question);
+        try{
+            for(int i = 0; i< num; i++){
+                if((orig[i] != null) && (value[i] != 0)){
+                    sb.setCharAt(orig[i], (char)(value[i] + 48));
+                    question = sb.toString();
+                }
+            }
+        }
+        catch(NullPointerException npe){
+            return("An error occurred.");
+        }
+        
+        return(question);
+    }
+
+    public static double UserSolution(double value1, double value2, double value3, String SelectedQuestion){
+        int counter = 0;
+        Scanner sc = new Scanner(SelectedQuestion);
+        String line = new String();
+        String[] Operation = new String[20];
+        double[] num = new double[10];
+
+        while(sc.hasNext()){
+
+            line = sc.next();
+            Operation[counter] = line;
+            
+            counter ++;
+        }
+        // System.out.println(value1);
+        // System.out.println(value2);
+        // System.out.println(value3);
+        // int len = Operation.length;
+        // System.out.println(len);   
+        num[0] = value1;
+        num[2] = value2;
+        num[4] = value3;
+            
+
+        return(Calculation(Operation, num));
+           
+        
+    }
+
+    public static double Calculation(String[] Operation, double[] num){
+        double counter1 = 0.0;
+        double answer = 0.0;
+        // SETTING UP BEDMAS FOR *
+        
+        if(Operation[5] == null){
+            
+            if(Operation[1].equals("x")){
+                if(Operation[3].equals("^")){
+                    answer += num[0] * Math.pow(num[2], num[4]);
+                }
+                else if(Operation[3].equals("x")){
+                    answer += num[0] * num[2] * num[4];
+                    }
+                else if(Operation[3].equals("/")){
+                    answer += num[0] * num[2] / num[4];
+                }
+                else if(Operation[3].equals("+")){
+                    answer += num[0] * num[2] + num[4];
+                }
+                else if(Operation[3].equals("-")){
+                    answer += num[0] * num[2] - num[4];
+                }
+            }
+                    
+            // BEDMAS FOR /
+            else if(Operation[1].equals("/")){
+                if(Operation[3].equals("^")){
+                    answer += num[0] / Math.pow(num[2], num[4]);
+                }
+                else if(Operation[3].equals("x")){
+                    answer += num[0] / num[2] * num[4];
+                }
+                else if(Operation[3].equals("/")){
+                    answer += num[0] / num[2] / num[4];
+                }
+                else if(Operation[3].equals("+")){
+                    answer += num[0] / num[2] + num[4];
+                }
+                else if(Operation[3].equals("-")){
+                    answer += num[0] / num[2] - num[4];
+                }
+            }
+    
+            // BEDMAS FOR ADDING
+            else if(Operation[1].equals("+")){
+                if(Operation[3].equals("x")){
+                    answer+= num[0] + num[2]*num[4];
+                }
+                else if(Operation[3].equals("/")){
+                    answer+= num[0] + num[2] / num[4];
+                }
+                else if(Operation[3].equals("^")){
+                    answer+= num[0] + Math.pow(num[2], num[4]);
+                }
+                else if(Operation[3].equals("-")){
+                    answer += num[0]+ num[2] - num[4];
+                }
+                else{
+                    answer += num[0] + num[2] + num[4];
+                }
+    
+            }
+            else if(Operation[1].equals("-")){
+                if(Operation[3].equals("+")){
+                    answer += num[0] - num[2] + num[4];
+                }
+                else if(Operation[3].equals("-")){
+                    answer += num[0] - num[2] - num[4];
+                }
+                else if(Operation[3].equals("x")){
+                    answer += num[0] - num[2] * num[4];
+                }
+                else if(Operation[3].equals("/")){
+                    answer += num[0] - num[2] / num[4];
+                }
+                else if(Operation[3].equals("^")){
+                    answer += num[0] - Math.pow(num[2], num[4]);
+                }
+                        
+            }
+            else if(Operation[1].equals("^")){
+                if(Operation[3].equals("^")){
+                    counter1 += Math.pow(num[0], num[2]); 
+                    answer += Math.pow(counter1, num[4]);
+                }
+                else if(Operation[3].equals("x")){
+                    answer += Math.pow(num[0], num[2]) * num[4];
+                }
+                else if(Operation[3].equals("/")){
+                    answer += Math.pow(num[0], num[2]) / num[4];
+                }
+                else if(Operation[3].equals("-")){
+                    answer += Math.pow(num[0], num[2]) - num[4];
+                }
+                else if(Operation[3].equals("+")){
+                    answer += Math.pow(num[0], num[2]) + num[4];
+                }
+            }
+        }
+
+        else if(Operation[7] == null){
+            if(Operation[0].equals("(") && Operation[4].equals(")")){
+                if(Operation[2].equals("+")){
+                    if(Operation[5].equals("/")){
+                        answer += (num[0] + num[2]) / num[4];
+                    }
+                    else if(Operation[5].equals("x")){
+                        answer += (num[0] + num[2]) * num[4];
+                    }
+                    else if(Operation[5].equals("^")){
+                        counter1 += (num[0] + num[2]);
+                        answer += Math.pow(counter1, num[4]);
+                    }
+                    else if(Operation[5].equals("-")){
+                        answer += (num[0] + num[2]) - num[4];
+                    }
+                    else if(Operation[5].equals("+")){
+                        answer += (num[0] + num[2]) + num[4];
+                    }
+                }
+                else if(Operation[2].equals("x")){
+                    if(Operation[5].equals("-")){
+                        answer += (num[0] * num[2]) - num[4];
+                    }
+                    else if(Operation[5].equals("+")){
+                        answer += (num[0] * num[2]) + num[4];
+                    }
+                    else if(Operation[5].equals("x")){
+                        answer += (num[0] * num[2]) * num[4];
+                    }
+                    else if(Operation[5].equals("/")){
+                        answer += (num[0] * num[2]) / num[4];
+                    }
+                    else if(Operation[5].equals("^")){
+                        counter1 += (num[0] * num[2]);
+                        answer += Math.pow(counter1, num[4]);
+                    }
+                }
+                else if(Operation[2].equals("/")){
+                    if(Operation[5].equals("-")){
+                        answer += (num[0] / num[2]) - num[4];
+                    }
+                    else if(Operation[5].equals("+")){
+                        answer += (num[0] / num[2]) + num[4];
+                    }
+                    else if(Operation[5].equals("x")){
+                        answer += (num[0] / num[2]) * num[4];
+                    }
+                    else if(Operation[5].equals("/")){
+                        answer += (num[0] / num[2]) / num[4];
+                    }
+                    else if(Operation[5].equals("^")){
+                        counter1 += (num[0] / num[2]);
+                        answer += Math.pow(counter1, num[4]);
+                    }
+                }
+                else if(Operation[2].equals("-")){
+                    if(Operation[5].equals("-")){
+                        answer += (num[0] - num[2]) - num[4];
+                    }
+                    else if(Operation[5].equals("+")){
+                        answer += (num[0] - num[2]) + num[4];
+                    }
+                    else if(Operation[5].equals("x")){
+                        answer += (num[0] - num[2]) * num[4];
+                    }
+                    else if(Operation[5].equals("/")){
+                        answer += (num[0] - num[2]) / num[4];
+                    }
+                    else if(Operation[5].equals("^")){
+                        counter1 += (num[0] - num[2]);
+                        answer += Math.pow(counter1, num[4]);
+                    }
+                }
+                else if(Operation[2].equals("^")){
+                    if(Operation[5].equals("-")){
+                        answer += Math.pow(num[0], num[2]) - num[4];
+                    }
+                    else if(Operation[5].equals("+")){
+                        answer += Math.pow(num[0], num[2]) + num[4];
+                    }
+                    else if(Operation[5].equals("/")){
+                        answer += Math.pow(num[0], num[2]) / num[4];
+                    }
+                    else if(Operation[5].equals("x")){
+                        answer += Math.pow(num[0], num[2]) * num[4];
+                    }
+                    else if(Operation[5].equals("^")){
+                        counter1 += Math.pow(num[0], num[2]);
+                        answer += Math.pow(counter1, num[4]);
+                    }
+                }
+            }
+            else{
+                if(Operation[4].equals("x")){
+                    answer += num[0] * num[2];
+                }
+                else if(Operation[4].equals("/")){
+                    answer += num[0] / num[2];
+                }
+                else if(Operation[4].equals("+")){
+                    answer += num[0] + num[2];
+                }
+                else if(Operation[4].equals("-")){
+                    answer += num[0] - num[2];
+                }
+                else if(Operation[4].equals("^")){
+                    answer += Math.pow(num[0], num[2]);
+                }
+            }
+        }
+
+        // To check the equation that has length of 10
+        else if(Operation[10] == null){
+            if(Operation[4].equals("x")){
+                if(Operation[7].equals("^")){
+                    answer += num[0] * Math.pow(num[2], num[4]);
+                }
+                else if(Operation[7].equals("x")){
+                    answer += num[0] * num[2] * num[4];
+                    }
+                else if(Operation[7].equals("/")){
+                    answer += num[0] * num[2] / num[4];
+                }
+                else if(Operation[7].equals("+")){
+                    answer += num[0] * num[2] + num[4];
+                }
+                else if(Operation[7].equals("-")){
+                    answer += num[0] * num[2] - num[4];
+                }
+            }
+                    
+            // BEDMAS FOR /
+            else if(Operation[4].equals("/")){
+                if(Operation[7].equals("^")){
+                    answer += num[0] / Math.pow(num[2], num[4]);
+                }
+                else if(Operation[7].equals("x")){
+                    answer += num[0] / num[2] * num[4];
+                }
+                else if(Operation[7].equals("/")){
+                    answer += num[0] / num[2] / num[4];
+                }
+                else if(Operation[7].equals("+")){
+                    answer += num[0] / num[2] + num[4];
+                }
+                else if(Operation[7].equals("-")){
+                    answer += num[0] / num[2] - num[4];
+                }
+            }
+    
+            // BEDMAS FOR ADDING
+            else if(Operation[4].equals("+")){
+                if(Operation[7].equals("x")){
+                    answer+= num[0] + num[2]*num[4];
+                }
+                else if(Operation[7].equals("/")){
+                    answer+= num[0] + num[2] / num[4];
+                }
+                else if(Operation[7].equals("^")){
+                    answer+= num[0] + Math.pow(num[2], num[4]);
+                }
+                else if(Operation[7].equals("-")){
+                    answer += num[0]+ num[2] - num[4];
+                }
+                else if(Operation[7].equals("+")){
+                    answer += num[0] + num[2] + num[4];
+                }
+    
+            }
+            else if(Operation[4].equals("-")){
+                if(Operation[7].equals("+")){
+                    answer += num[0] - num[2] + num[4];
+                }
+                else if(Operation[7].equals("-")){
+                    answer += num[0] - num[2] - num[4];
+                }
+                else if(Operation[7].equals("x")){
+                    answer += num[0] - num[2] * num[4];
+                }
+                else if(Operation[7].equals("/")){
+                    answer += num[0] - num[2] / num[4];
+                }
+                else if(Operation[7].equals("^")){
+                    answer += num[0] - Math.pow(num[2], num[4]);
+                }
+                        
+            }
+            else if(Operation[4].equals("^")){
+                if(Operation[7].equals("^")){
+                    counter1 += Math.pow(num[0], num[2]); 
+                    answer += Math.pow(counter1, num[4]);
+                }
+                else if(Operation[7].equals("x")){
+                    answer += Math.pow(num[0], num[2]) * num[4];
+                }
+                else if(Operation[7].equals("/")){
+                    answer += Math.pow(num[0], num[2]) / num[4];
+                }
+                else if(Operation[7].equals("-")){
+                    answer += Math.pow(num[0], num[2]) - num[4];
+                }
+                else if(Operation[7].equals("+")){
+                    answer += Math.pow(num[0], num[2]) + num[4];
+                }
+            }
+        }
+        //////////////////////////////////////////////////////////////////////////////////////
+        // Check the equation that length is 12
+        else if(Operation[12] == null){
+            if(Operation[5].equals("(") && Operation[11].equals(")")){
+                if(Operation[4].equals("+")){
+                    if(Operation[8].equals("/")){
+                        answer += num[0] + (num[2] / num[4]);
+                    }
+                    else if(Operation[8].equals("x")){
+                        answer += num[0] + (num[2] * num[4]);
+                    }
+                    else if(Operation[8].equals("^")){
+                        
+                        answer += num[0] + (Math.pow(num[2], num[4]));
+                    }
+                    else if(Operation[8].equals("-")){
+                        answer += num[0] + (num[2] - num[4]);
+                    }
+                    else if(Operation[8].equals("+")){
+                        answer += num[0] + (num[2] + num[4]);
+                    }
+                }
+                else if(Operation[4].equals("x")){
+                    if(Operation[8].equals("-")){
+                        answer += num[0] * (num[2] - num[4]);
+                    }
+                    else if(Operation[8].equals("+")){
+                        answer += num[0] * (num[2] + num[4]);
+                    }
+                    else if(Operation[8].equals("x")){
+                        answer += num[0] * (num[2] * num[4]);
+                    }
+                    else if(Operation[8].equals("/")){
+                        answer += num[0] * (num[2] / num[4]);
+                    }
+                    else if(Operation[8].equals("^")){
+                        
+                        answer += num[0]*(Math.pow(num[2], num[4]));
+                    }
+                }
+                else if(Operation[4].equals("/")){
+                    if(Operation[8].equals("-")){
+                        answer += num[0] / (num[2] - num[4]);
+                    }
+                    else if(Operation[8].equals("+")){
+                        answer += num[0] / (num[2] + num[4]);
+                    }
+                    else if(Operation[8].equals("x")){
+                        answer += num[0] / (num[2] * num[4]);
+                    }
+                    else if(Operation[8].equals("/")){
+                        answer += num[0] / (num[2] / num[4]);
+                    }
+                    else if(Operation[8].equals("^")){
+                        
+                        answer += num[0] / (Math.pow(num[2], num[4]));
+                    }
+                }
+                else if(Operation[4].equals("-")){
+                    if(Operation[8].equals("-")){
+                        answer += num[0] - (num[2] - num[4]);
+                    }
+                    else if(Operation[8].equals("+")){
+                        answer += num[0] - (num[2] + num[4]);
+                    }
+                    else if(Operation[8].equals("x")){
+                        answer += num[0] - (num[2] * num[4]);
+                    }
+                    else if(Operation[8].equals("/")){
+                        answer += num[0] - (num[2] / num[4]);
+                    }
+                    else if(Operation[8].equals("^")){
+                        
+                        answer += num[0] - (Math.pow(num[2], num[4]));
+                    }
+                }
+                
+            }
+        }
+            
+        
+        
+        
+        return answer;
+    } 
 }
