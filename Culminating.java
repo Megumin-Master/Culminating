@@ -709,26 +709,30 @@ public class Culminating extends Application implements EventHandler<ActionEvent
         return(question);
     }
 
+    /*
+     * Author - Jeffrey Lin
+     * Description: To scan the new equation of the new 3 values, base on the length of equation, will store all the neceessary integer into int array and operation to string array
+     * 
+     * @param - double value1, double value2, double value3, and the string of the new equation. value1,2,3 is whatever the user had Input
+     * @return - return the method of "Calculation" by using the string array and int array in this methods
+     */
     public static double UserSolution(double value1, double value2, double value3, String SelectedQuestion){
-        int counter = 0;
-        Scanner sc = new Scanner(SelectedQuestion);
+        int counter = 0; // Initlized int counter
+        Scanner sc = new Scanner(SelectedQuestion); // scan question
         String line = new String();
-        String[] Operation = new String[20];
-        double[] num = new double[10];
+        String[] Operation = new String[20]; // set the string array length to 20 just for making sure that it is out of range
+        double[] num = new double[10]; // set the int array length to 10
 
+        //While loop condition: whenever the sc found next character the loop continue
         while(sc.hasNext()){
 
-            line = sc.next();
-            Operation[counter] = line;
+            line = sc.next(); // put all the next character into string variable called line
+            Operation[counter] = line; // store each time string into each index of the operation array
             
-            counter ++;
+            counter ++; // +1 everytime
         }
-        // System.out.println(value1);
-        // System.out.println(value2);
-        // System.out.println(value3);
-        // int len = Operation.length;
-        // System.out.println(len);   
-        num[0] = value1;
+        
+        num[0] = value1; // int array to put value that user input into a int array
         num[2] = value2;
         num[4] = value3;
             
@@ -737,13 +741,19 @@ public class Culminating extends Application implements EventHandler<ActionEvent
            
         
     }
-
+    /*
+     * Author - Jeffrey Lin
+     * Description: Use if statement to calculates the final solution in any condition of equations
+     * 
+     * @param - the String array from above method: String[] Operation, and the int array from above method: int[] num
+     * @return - The answer which is the solution
+     */
     public static double Calculation(String[] Operation, double[] num){
         double counter1 = 0.0;
         double answer = 0.0;
+        
         // SETTING UP BEDMAS FOR *
-
-        if(Operation[3] == null){
+        if(Operation[3] == null){ // if index of Operation[3] is nothing: DO FOLLOWING
             if(Operation[1].equals("x")){
                 answer += num[0] * num[2];
             }
@@ -761,8 +771,13 @@ public class Culminating extends Application implements EventHandler<ActionEvent
             }
         }
         
+        // ELSE IF Operation[5] is nothing: DO FOLLOWING
         else if(Operation[5] == null){
-            
+            //////////////////////////////////////////////////////////////////////////////
+            // DOWN BELOW THE COMPOUND IF STATEMENT IS FOR THE BEDMAS OF THIS CONDITION
+            //////////////////////////////////////////////////////////////////////////////
+
+            // BEDMAS FOR *
             if(Operation[1].equals("x")){
                 if(Operation[3].equals("^")){
                     answer += num[0] * Math.pow(num[2], num[4]);
@@ -819,6 +834,7 @@ public class Culminating extends Application implements EventHandler<ActionEvent
                 }
     
             }
+            // BEDMAS FOR substracting 
             else if(Operation[1].equals("-")){
                 if(Operation[3].equals("+")){
                     answer += num[0] - num[2] + num[4];
@@ -837,6 +853,7 @@ public class Culminating extends Application implements EventHandler<ActionEvent
                 }
                         
             }
+            // BEDMAS FOR POWER
             else if(Operation[1].equals("^")){
                 if(Operation[3].equals("^")){
                     counter1 += Math.pow(num[0], num[2]); 
@@ -857,8 +874,11 @@ public class Culminating extends Application implements EventHandler<ActionEvent
             }
         }
 
+        // ELSE IF Operation[7] is nothing: DO FOLLOWING
         else if(Operation[7] == null){
+            // if there is bracket do what is in the bracket first
             if(Operation[0].equals("(") && Operation[4].equals(")")){
+                //BEDMAS FOR ADDING
                 if(Operation[2].equals("+")){
                     if(Operation[5].equals("/")){
                         answer += (num[0] + num[2]) / num[4];
@@ -877,6 +897,7 @@ public class Culminating extends Application implements EventHandler<ActionEvent
                         answer += (num[0] + num[2]) + num[4];
                     }
                 }
+                // BEDMAS FOR *
                 else if(Operation[2].equals("x")){
                     if(Operation[5].equals("-")){
                         answer += (num[0] * num[2]) - num[4];
@@ -895,6 +916,7 @@ public class Culminating extends Application implements EventHandler<ActionEvent
                         answer += Math.pow(counter1, num[4]);
                     }
                 }
+                // BEDMAS FOR /
                 else if(Operation[2].equals("/")){
                     if(Operation[5].equals("-")){
                         answer += (num[0] / num[2]) - num[4];
@@ -913,6 +935,7 @@ public class Culminating extends Application implements EventHandler<ActionEvent
                         answer += Math.pow(counter1, num[4]);
                     }
                 }
+                // BEDMAS FOR - 
                 else if(Operation[2].equals("-")){
                     if(Operation[5].equals("-")){
                         answer += (num[0] - num[2]) - num[4];
@@ -931,6 +954,7 @@ public class Culminating extends Application implements EventHandler<ActionEvent
                         answer += Math.pow(counter1, num[4]);
                     }
                 }
+                //BEDMAS FOR POWER
                 else if(Operation[2].equals("^")){
                     if(Operation[5].equals("-")){
                         answer += Math.pow(num[0], num[2]) - num[4];
@@ -950,6 +974,7 @@ public class Culminating extends Application implements EventHandler<ActionEvent
                     }
                 }
             }
+            // IF THERE IS NO BRACKET
             else{
                 if(Operation[4].equals("x")){
                     answer += num[0] * num[2];
@@ -970,7 +995,9 @@ public class Culminating extends Application implements EventHandler<ActionEvent
         }
 
         // To check the equation that has length of 10
+        // ElSE IF the Operation[10] has nothing: DO FOLLOWING
         else if(Operation[10] == null){
+            //BEDMAS FOR *
             if(Operation[4].equals("x")){
                 if(Operation[7].equals("^")){
                     answer += num[0] * Math.pow(num[2], num[4]);
@@ -1027,6 +1054,7 @@ public class Culminating extends Application implements EventHandler<ActionEvent
                 }
     
             }
+            //BEDMAS FOR -
             else if(Operation[4].equals("-")){
                 if(Operation[7].equals("+")){
                     answer += num[0] - num[2] + num[4];
@@ -1045,6 +1073,7 @@ public class Culminating extends Application implements EventHandler<ActionEvent
                 }
                         
             }
+            //BEDMAS FOR power
             else if(Operation[4].equals("^")){
                 if(Operation[7].equals("^")){
                     counter1 += Math.pow(num[0], num[2]); 
@@ -1066,8 +1095,12 @@ public class Culminating extends Application implements EventHandler<ActionEvent
         }
         //////////////////////////////////////////////////////////////////////////////////////
         // Check the equation that length is 12
+        // ELSE IF the Operaiton[12] has nothing: DO FOLLOWING!
+        /////////////////////////////////////////////////////////////////////////////////////
         else if(Operation[12] == null){
+            // CHECK IF THERE IS A BRACKET, if there is do what is in there first
             if(Operation[5].equals("(") && Operation[11].equals(")")){
+                // BEDMAS FOR ADDING
                 if(Operation[4].equals("+")){
                     if(Operation[8].equals("/")){
                         answer += num[0] + (num[2] / num[4]);
@@ -1086,6 +1119,7 @@ public class Culminating extends Application implements EventHandler<ActionEvent
                         answer += num[0] + (num[2] + num[4]);
                     }
                 }
+                // BEDMAS FOR *
                 else if(Operation[4].equals("x")){
                     if(Operation[8].equals("-")){
                         answer += num[0] * (num[2] - num[4]);
@@ -1104,6 +1138,7 @@ public class Culminating extends Application implements EventHandler<ActionEvent
                         answer += num[0]*(Math.pow(num[2], num[4]));
                     }
                 }
+                // BEDMAS FOR /
                 else if(Operation[4].equals("/")){
                     if(Operation[8].equals("-")){
                         answer += num[0] / (num[2] - num[4]);
@@ -1122,6 +1157,7 @@ public class Culminating extends Application implements EventHandler<ActionEvent
                         answer += num[0] / (Math.pow(num[2], num[4]));
                     }
                 }
+                // BEDMAS FOR -
                 else if(Operation[4].equals("-")){
                     if(Operation[8].equals("-")){
                         answer += num[0] - (num[2] - num[4]);
@@ -1136,7 +1172,6 @@ public class Culminating extends Application implements EventHandler<ActionEvent
                         answer += num[0] - (num[2] / num[4]);
                     }
                     else if(Operation[8].equals("^")){
-                        
                         answer += num[0] - (Math.pow(num[2], num[4]));
                     }
                 }
@@ -1146,7 +1181,7 @@ public class Culminating extends Application implements EventHandler<ActionEvent
             
         
         
-        
+        // RETURN THE ANSWER
         return answer;
     } 
 }
