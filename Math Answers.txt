@@ -1,12 +1,7 @@
 Answers correspond to the questions in Math.txt according to the number.
 
-1.  50
-2.  7
+1.  45
+2.  13
 3.  1.5
-4.  107.625
-5.  16
-6.  31
-7.  24
-8.  10925
-9.  136746
-10.  378.196
+4.  5.25
+5.  32

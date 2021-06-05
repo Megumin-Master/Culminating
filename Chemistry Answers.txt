@@ -1,12 +1,7 @@
 Answers correspond to the questions in Chemistry.txt according to the number.
 
-1.  5 g
-2.  2.727 mol
-3.  21.655 L
-4.  480 kPa
-5.  169.6 g
-6.  374.32 kPa
-7.  1.77 mol/L
-8.  0.36 mol/L
-9.  0.04167 L
-10.  271 kPa
+1.  0.4
+2.  1.25
+3.  2.22
+4.  4.8
+5.  18

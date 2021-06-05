@@ -1,1 +1,5 @@
-Hello World
++ means add
+- means subtract
+x means multiply
+/ means divide
+^ means to the power

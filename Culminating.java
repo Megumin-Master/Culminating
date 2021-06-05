@@ -571,67 +571,86 @@ public class Culminating extends Application implements EventHandler<ActionEvent
         double num2 = Double.parseDouble(value2.getText()); // Turns the user input from value 2 into a double
         double num3 = Double.parseDouble(value3.getText()); // Turns the user input from value 3 into a double
 
+        double[] list = {num1, num2, num3};
+
+        String equation = "";
+
+        int conditions = 0;
+
         String newQuestion = "";
 
         if (fileName == "Math.txt") {   // Since the files are premade, we do not need to worry about file not found exceptions
             if (questionNumber == 1) {  // If the question is _ number, it runs _ method
-                String equation = (num1 + " x " + num2);
-                int conditions = 2;
-                double[] list = {num1, num2, num3};
-                newQuestion = generateQuestion(questionStr, conditions, list);
-                System.out.println(newQuestion);
-                answerNum = UserSolution(num1, num2, num3, equation);
-                System.out.println(answerNum);
+                equation = (num1 + " x " + num2);
+                conditions = 2;
             }
             else if (questionNumber == 2) {
-                
+                equation = "1 + 3 x 4";
+                conditions = 3;
             }
             else if (questionNumber == 3) {
-                
+                equation = "2 x 3 / 4";
+                conditions = 3;
             }
             else if (questionNumber == 4) {
-
+                equation = "7 x 6 / 8";
+                conditions = 3;
             }
             else if (questionNumber == 5) {
-
+                equation = "2 ^ 5";
+                conditions = 2;
             }
         }
 
         if (fileName == "Chemistry.txt") {
             if (questionNumber == 1) {
-                
+                equation = "2 / 5";
+                conditions = 2;
             }
             else if (questionNumber == 2) {
-
+                equation = "5 / 4";
+                conditions = 2;
             } 
             else if (questionNumber == 3) {
-
+                equation = "5 x 4 / 9";
+                conditons = 3;
             }
             else if (questionNumber == 4) {
-
+                equation = "3 x 8 / 5";
+                conditions = 3;
             }
             else if (questionNumber == 5) {
-
+                equation = "6 x 3";
+                conditions = 2;
             }
         }
 
         if (fileName == "Physics.txt") {
             if (questionNumber == 1) {
-                
+                equation = "6 x 1";
+                conditions = 2;
             }
             else if (questionNumber == 2) {
-
+                equation = "2 / 3";
+                conditions = 2;
             } 
             else if (questionNumber == 3) {
-
+                equation = "5 / 7";
+                conditions = 2;
             }
             else if (questionNumber == 4) {
-
+                equation = "3 x 8 / 5";
+                conditions = 3;
             }
             else if (questionNumber == 5) {
-                
+                equation = "9 x 7";
+                conditions = 2;
             }
         }
+
+        newQuestion = generateQuestion(questionStr, conditions, list);
+        answerNum = UserSolution(num1, num2, num3, equation);
+
         String answer = Double.toString(answerNum); // Turns the final answer to a string to put in a label
 
         String[] qAndA = {newQuestion, answer};

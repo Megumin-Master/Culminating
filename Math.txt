@@ -3,10 +3,6 @@ You can copy and paste questions as you need
 1.  What is 9 multiplied by 5?
 2.  1 + 3 x 4
 3.  2 x 3 / 4
-4.  7 x 123 / 8 
-5.  2 ^ 3 x 2
-6.  72 - 82 / 2
-7.  12 ^ 2 / 6
-8.  11 x 982 + 123
-9.  852 / 6 x 963
-10.  123 / 321 x 987
+4.  7 x 6 / 8 
+5.  What is 2 to the power of 5?
+
