@@ -3,7 +3,7 @@ You can copy and paste questions as you need
 1.  d = 60 m/s x 10 s
 2.  v = 120 m / 3 s
 3.  t = 250 m / 27 m/s 
-4.  P2 = 300 kPa x 8 L / 5 L
+4.  V = 300 P x 8 L / 5 L
 5.  F = 69 g x 9.8 m/s^2
 6.  Work(Joules) = 8.5 newtons x 60 m
 7.  W = 802 W + ( 796 V x 30 s )
