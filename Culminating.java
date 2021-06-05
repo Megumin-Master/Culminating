@@ -611,7 +611,7 @@ public class Culminating extends Application implements EventHandler<ActionEvent
             } 
             else if (questionNumber == 3) {
                 equation = "5 x 4 / 9";
-                conditons = 3;
+                conditions = 3;
             }
             else if (questionNumber == 4) {
                 equation = "3 x 8 / 5";
