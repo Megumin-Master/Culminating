@@ -571,12 +571,10 @@ public class Culminating extends Application implements EventHandler<ActionEvent
         double num2 = Double.parseDouble(value2.getText()); // Turns the user input from value 2 into a double
         double num3 = Double.parseDouble(value3.getText()); // Turns the user input from value 3 into a double
 
+        //Establish variables required for future calculations/edits
         double[] list = {num1, num2, num3};
-
         String equation = "";
-
         int conditions = 0;
-
         String newQuestion = "";
 
         if (fileName == "Math.txt") {   // Since the files are premade, we do not need to worry about file not found exceptions
@@ -648,13 +646,16 @@ public class Culminating extends Application implements EventHandler<ActionEvent
             }
         }
 
+        //Uses Yuyang's method to change the previous question into a new string with the new values
         newQuestion = generateQuestion(questionStr, conditions, list);
+        //Uses Jeffrey's method to calculate the question
         answerNum = UserSolution(num1, num2, num3, equation);
 
         String answer = Double.toString(answerNum); // Turns the final answer to a string to put in a label
 
+        //creates an array to put the question and answer to return.
         String[] qAndA = {newQuestion, answer};
-        return qAndA;  // Returns the string
+        return qAndA;  // Returns the array
     }
     
     
