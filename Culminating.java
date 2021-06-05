@@ -607,7 +607,7 @@ public class Culminating extends Application implements EventHandler<ActionEvent
         int count = -1;
         Integer[] orig = new Integer[num];
 
-        for(int i = 3; i< question.length(); i++){
+        for(int i = 3; i< question.length() - 3; i++){
             try{
                 if(Character.isDigit(question.charAt(i))){
                     count += 1;
