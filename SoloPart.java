@@ -1,5 +1,5 @@
 /*
- * Name: Benjamin Kim, David Han, Yuyang, Jeffrey
+ * Name: Benjamin Kim
  * Date: June 4th, 2021
  * Teacher: Mr. Ho
  * Description: Culminating Assignment - Question Bank
@@ -23,7 +23,7 @@ import javafx.stage.Stage;
  * Author - Benjamin Kim
  * Description - Holds almost every javafx variable in the program
  */
-public class Culminating extends Application implements EventHandler<ActionEvent>{
+public class SoloPart extends Application implements EventHandler<ActionEvent>{
     
     static Stage window;    // Naming the Stage, which is the window, to window
     // All the scenes in this program
@@ -572,33 +572,20 @@ public class Culminating extends Application implements EventHandler<ActionEvent
                 
             }
             else if (questionNumber == 2) {
-                answerNum = math2(num1, num2, num3);
+                
             }
             else if (questionNumber == 3) {
-                answerNum = math3(num1, num2, num3);
+                
             }
         }
 
         if (fileName == "Chemistry.txt") {
             if (questionNumber == 1) {
-                answerNum = chem1(num1, num2);
+                
             }
         }
         String answer = Double.toString(answerNum); // Turns the final answer to a string to put in a label
         return answer;  // Returns the string
-    }
-    
-    public static double math3(double value1, double value2, double value3) {
-        double answer = value1*value2/value3;
-        return answer;
-    } 
-    public static double math2 (double value1, double value2, double value3) {
-        double answer = value2*value3 + value1;
-        return answer;
-    }
-    public static double chem1 (double value1, double value2) {
-        double answer = value1/value2;
-        return answer;
     }
     
     @Override

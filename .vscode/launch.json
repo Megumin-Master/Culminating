@@ -6,6 +6,14 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch SoloPart",
+            "request": "launch",
+            "vmArgs": "--module-path C:/Users/user/Desktop/BenfordsLaw/javafx-sdk-11.0.2/lib --add-modules javafx.controls,javafx.fxml",
+            "mainClass": "SoloPart",
+            "projectName": "Culminating_bcbc3ffa"
+        },
+        {
+            "type": "java",
             "name": "Launch Test",
             "request": "launch",
             "vmArgs": "--module-path C:/Users/user/Desktop/BenfordsLaw/javafx-sdk-11.0.2/lib --add-modules javafx.controls,javafx.fxml",
